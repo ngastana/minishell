@@ -6,14 +6,13 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/02 13:33:15 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/03 18:52:47 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# include "libft.h"
+# include "libft/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -30,15 +29,19 @@
 # define STDOUT 1
 # define STDERR 2
 
+typedef struct s_input
+{
+	void				*content;
+	struct s_list		*next;
+}						t_input;
+
 typedef struct s_mini
 {
-	int		in;
-	int		out;
-	int		exit;
-	int		sigint;
-	int		sigquit;
-	int		exit_status;
-	pid_t	pid;
+	char	*input;
 }	t_mini;
+
+/*MAIN*/
+int		main(int argc, char **argv, char **env);
+void	ft_signals(t_mini mini);
 
 #endif
