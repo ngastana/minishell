@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/03 18:52:47 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:45:40 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,24 @@
 # define STDOUT 1
 # define STDERR 2
 
-typedef struct s_input
+typedef struct s_in
 {
-	void				*content;
-	struct s_list		*next;
-}						t_input;
+	char				*content;
+	struct s_in			*next;
+}						t_in;
 
 typedef struct s_mini
 {
-	char	*input;
+	t_in	*in;
+	char	*path;
+	char	**location_paths;	
 }	t_mini;
 
 /*MAIN*/
 int		main(int argc, char **argv, char **env);
 void	ft_signals(t_mini mini);
+
+/*EXEC*/
+void	exec(t_mini mini, char **env);
 
 #endif
