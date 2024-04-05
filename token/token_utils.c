@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 16:17:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/04 17:38:23 by ngastana         ###   ########.fr       */
+/*   Created: 2024/04/05 11:37:59 by ngastana          #+#    #+#             */
+/*   Updated: 2024/04/05 13:09:16 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	signals_sigin(int mini)
+int	ft_space(char c)
 {
-	(void) mini;
-	printf("\n");
+	if (c == '\t' || c == '\n' || c == '\v'
+		|| c == '\f' || c == '\r' || c == ' ')
+		return (1);
+	return (0);
 }
 
-static void	signals_sigout(int mini)
+char	*ft_skip_spaces(char *line)
 {
-	(void) mini;
-	printf("exit\n");
-	exit (1);
-}
+	int i;
 
-void	ft_signals(t_mini mini)
-{
-	(void) mini;
-	signal(STDIN, signals_sigin);
-	signal(STDOUT, signals_sigout);
+	i = 0;
+	while (line[i] != '\0' && ft_space(line[i]))
+		i++;
+	return (&line[i]);
 }

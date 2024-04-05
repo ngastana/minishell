@@ -6,13 +6,22 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:21:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/04 17:19:41 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:27:54 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	initialize_input(t_mini *mini, char *input)
+static t_mini initialize_minishell(char **env)
+{
+	t_mini	mini;
+
+	ft_memset(&mini, 0, sizeof(t_mini));
+	mini.enviroment = env;
+	return (mini);
+}
+
+static void	initialize_input(t_mini *mini, char *input)
 {
 	char	**split_space;
 	int		i;
@@ -52,7 +61,10 @@ void	initialize_input(t_mini *mini, char *input)
 void	take (char *input)
 {
 	if (!input)
+	{
+		ft_putstr_fd("exit\n", 1);
 		exit (1);
+	}
 	if (*input)
 		add_history(input);
 }
@@ -62,31 +74,28 @@ int	main(int argc, char **argv, char **env)
 	t_mini	mini;
 	char	*input;
 
-	(void)argc;
-	(void)argv;
-	printf("%s\n", env[0]);
-	ft_bzero(&mini, sizeof(struct s_mini));
+	((void)argc, (void)argv);
+	mini = initialize_minishell(env);
 	while (1)
 	{
-		input = readline("MINISHELL🧐 >");
+		input = readline("🤯Minishell >");
+//		ft_signals(mini);
 		take(input);
 		if (*input)
 		{
 			initialize_input(&mini, input);
 			if (mini.in->content != NULL)
 			{
-				printf("%s\n", mini.in->content);
-				exec(mini, env);
+				mini.token = ft_token(input);
+//				exec(mini, env);
 				while (mini.in != NULL)
 				{
-					printf("split: %s\n", mini.in->content);
+					printf("DENTRO DEL SPLIT: %s\n", mini.in->content);
 					mini.in = mini.in->next;
 				}
-		//		ft_signals(mini);
 			}
-			free(mini.in);
+			free(input);
 		}
-		free(input);
 	}
 	return (0);
 }
