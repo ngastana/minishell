@@ -46,11 +46,9 @@ void	first_child(t_mini mini, char **env)
 void	exec(t_mini mini, char **env)
 {
 	pid_t	pid;
-	int		i;
 
 	mini.path = find_path(env);
 	mini.location_paths = ft_split(mini.path, ':');
-	i = 0;
 	pid = fork();
 	if (pid == -1)
 		printf("ERROR");

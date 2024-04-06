@@ -80,6 +80,10 @@ char	*ft_skip_spaces(char *line);
 t_token	*ft_token(char *input);
 int		ft_handle_token(char **line_ptr, t_token **token_list);
 int 	ft_without_token(char **line, t_token **token);
-
+int		ft_is_quote(char c);
+int		ft_is_separator(char *s);
+char	*ft_skip_spaces(char *line);
+t_token	*ft_add_new_token(char *value, t_token_type type);
+void	ft_add_token(t_token **token, t_token *new_token);
 
 #endif

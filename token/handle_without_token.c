@@ -19,26 +19,50 @@ int	ft_is_quote(char c)
 	return (0);
 }
 
-int	ft_is_separator(char *s)
+int	ft_skip_quote (char *input, int *i)
 {
-	if (!ft_strncmp(s, "&&", 2) || *s == ' ' || *s == '\t'
-		|| *s == '<' || *s == '>' || *s == '|' || *s == '(' || *s == ')')
+	char	quote;
+
+	quote = input[*i];
+	while (ft_strchr(input + *i +1, quote))
+	{
+		(*i)++;
+		while (input[*i] != quote)
+			(*i)++;
+		(*i)++;
 		return (1);
+	}
 	return (0);
 }
 
-int ft_without_token(char **line, t_token **token)
+int ft_without_token(char **input, t_token **token)
 {
-	char	*tmp_line;
+	char	*tmp_input;
 	size_t	i;
+	char	*value;
+	t_token *new_token;
 
 	(void) token;
-	tmp_line = *line;
+	tmp_input = *input;
 	i = 0;
-	while (line[i] && !ft_is_separator(tmp_line + i))
+	while (tmp_input[i] && !ft_is_separator(tmp_input + i))
 	{
-		printf("%s", line[i]);
-		i++;
+		if (ft_is_quote(tmp_input[i]))
+		{
+			if (!(ft_skip_quote(tmp_input, &i)))
+				return (printf("CIERRA LA CITA LERDO"), 0);
+		}
+		else	
+			i++;
 	}
+	value = ft_substr(tmp_input, 0, i);
+	if (!value)
+		return (0);
+	new_token = ft_new_token(value, T_IDENTIFIER);
+	if (!token)
+		return (free(value), 0);
+	*input += i;
+	return (ft_token_list_add_back(token, new_token), 1);
+	printf("%s\n", value);
 	return (1);
 }

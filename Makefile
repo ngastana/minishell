@@ -22,7 +22,7 @@ SRC =	./main/minishell.c \
 
 OBJ = $(SRC:.c=.o)
 
-FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
 READFLAG =  -lreadline -L/Users/$(USER)/.brew/opt/readline/lib
 READINCLUDE = -I/Users/$(USER)/.brew/opt/readline/include
 
@@ -38,6 +38,7 @@ CURSIVE		:= \033[3m
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBNAME)
+	@echo ""
 	@echo "$(BLUE)███████████████████████ Making minishell ███████████████████████$(YELLOW)"
 	@gcc $(FLAGS)   $(OBJ) $(LIBNAME) $(READFLAG)  -o $(NAME)
 	@echo "$(CLR_RMV)███████████████████████ Compiling is DONE ██████████████████████$(RESET)"
@@ -65,10 +66,12 @@ $(LIBNAME):
 clean:
 	@$(MAKE) -C ./libft clean
 	@rm -rf $(OBJ)
+	@echo "$(CYAN)███████████████████████ cleaning is DONE ██████████████████████$(RESET)"
 
 fclean: clean
 	@$(MAKE) -C ./libft fclean
 	@rm -rf $(NAME) $(LIBNAME)
+	@echo "$(CYAN)███████████████████████ fcleaning is DONE ██████████████████████$(RESET)"
 
 re: fclean all
 

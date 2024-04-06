@@ -20,6 +20,14 @@ int	ft_space(char c)
 	return (0);
 }
 
+int	ft_is_separator(char *s)
+{
+	if (!ft_strncmp(s, "&&", 2) || *s == ' ' || *s == '\t'
+		|| *s == '<' || *s == '>' || *s == '|' || *s == '(' || *s == ')')
+		return (1);
+	return (0);
+}
+
 char	*ft_skip_spaces(char *line)
 {
 	int i;
