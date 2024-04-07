@@ -38,8 +38,7 @@ CURSIVE		:= \033[3m
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBNAME)
-	@echo ""
-	@echo "$(BLUE)███████████████████████ Making minishell ███████████████████████$(YELLOW)"
+	@echo "$(BLUE)████████████████████████ Making minishell ██████████████████████$(YELLOW)"
 	@gcc $(FLAGS)   $(OBJ) $(LIBNAME) $(READFLAG)  -o $(NAME)
 	@echo "$(CLR_RMV)███████████████████████ Compiling is DONE ██████████████████████$(RESET)"
 	@echo ""
@@ -56,7 +55,7 @@ $(NAME): $(OBJ) $(LIBNAME)
 	@echo ""
 
 $(LIBNAME):
-	@echo "$(BLUE)█████████████████████████ Making LIBFT █████████████████████████$(RESET)"
+	@echo "$(BLUE)██████████████████████████ Making LIBFT ████████████████████████$(RESET)"
 	@$(MAKE) -C ./libft all
 	@cp ./libft/libft.a $(LIBNAME)
 
@@ -66,12 +65,12 @@ $(LIBNAME):
 clean:
 	@$(MAKE) -C ./libft clean
 	@rm -rf $(OBJ)
-	@echo "$(CYAN)███████████████████████ cleaning is DONE ██████████████████████$(RESET)"
+	@echo "$(CYAN)████████████████████████ cleaning is DONE ██████████████████████$(RESET)"
 
 fclean: clean
 	@$(MAKE) -C ./libft fclean
 	@rm -rf $(NAME) $(LIBNAME)
-	@echo "$(CYAN)███████████████████████ fcleaning is DONE ██████████████████████$(RESET)"
+	@echo "$(CYAN)███████████████████████ fcleaning is DONE  █████████████████████$(RESET)"
 
 re: fclean all
 

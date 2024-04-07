@@ -17,11 +17,11 @@ t_token	*ft_token(char *input)
 	int		found;
 	t_token	*token;
 
-	found = 0;
+	found = 1;
 	token = NULL;
 	while (*input)
 	{
-		if (found)
+		if (!found)
 			return (NULL);
 		if (ft_space(*input))
 			input = ft_skip_spaces(input);
@@ -31,6 +31,12 @@ t_token	*ft_token(char *input)
 			found = ft_handle_token(&input, &token);
 		else
 			found = ft_without_token(&input, &token);
+		while (token != NULL)
+		{
+			printf("-Valores de los tokens: %s\n", token->value);
+			printf("--Tipo del valor de los tokens: %u\n", token->type);			
+			token = token->next;
+		}		
 	}
 	return (token);
 }

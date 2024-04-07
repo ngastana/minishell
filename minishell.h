@@ -55,7 +55,6 @@ typedef struct s_token
 	t_token_type		type;
 	char				*value;
 	struct s_token		*next;
-	struct s_token		*prev;
 }	t_token;
 
 typedef struct s_mini
@@ -64,7 +63,7 @@ typedef struct s_mini
 	t_token	*token;
 	char	**enviroment;
 	char	*path;
-	char	**location_paths;	
+	char	**location_paths;
 }	t_mini;
 
 /*MAIN*/
@@ -85,5 +84,6 @@ int		ft_is_separator(char *s);
 char	*ft_skip_spaces(char *line);
 t_token	*ft_add_new_token(char *value, t_token_type type);
 void	ft_add_token(t_token **token, t_token *new_token);
+void	ft_clear_token(t_token **token);
 
 #endif

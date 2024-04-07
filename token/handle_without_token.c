@@ -38,7 +38,7 @@ int	ft_skip_quote (char *input, int *i)
 int ft_without_token(char **input, t_token **token)
 {
 	char	*tmp_input;
-	size_t	i;
+	int		i;
 	char	*value;
 	t_token *new_token;
 
@@ -50,7 +50,10 @@ int ft_without_token(char **input, t_token **token)
 		if (ft_is_quote(tmp_input[i]))
 		{
 			if (!(ft_skip_quote(tmp_input, &i)))
-				return (printf("CIERRA LA CITA LERDO"), 0);
+			{
+				ft_clear_token(token);
+				return (printf("CIERRA LA CITA LERDO\n"), 0);
+			}
 		}
 		else	
 			i++;
@@ -58,11 +61,11 @@ int ft_without_token(char **input, t_token **token)
 	value = ft_substr(tmp_input, 0, i);
 	if (!value)
 		return (0);
-	new_token = ft_new_token(value, T_IDENTIFIER);
-	if (!token)
+	new_token = ft_add_new_token(value, T_IDENTIFIER);
+	if (!new_token)
 		return (free(value), 0);
 	*input += i;
-	return (ft_token_list_add_back(token, new_token), 1);
-	printf("%s\n", value);
+	free (value);
+	ft_add_token(token, new_token);
 	return (1);
 }

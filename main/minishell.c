@@ -78,8 +78,8 @@ int	main(int argc, char **argv, char **env)
 	mini = initialize_minishell(env);
 	while (1)
 	{
-		input = readline("🤯Minishell >");
-//		ft_signals(mini);
+		input = readline("🤯Minishell >");		
+		ft_signals(mini);
 		take(input);
 		if (*input)
 		{

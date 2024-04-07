@@ -37,3 +37,21 @@ char	*ft_skip_spaces(char *line)
 		i++;
 	return (&line[i]);
 }
+
+void	ft_clear_token(t_token **token)
+{
+	t_token	*current_token;
+	t_token *next_token;
+
+	if (!*token)
+		return;
+	current_token = *token;
+	while (current_token != NULL)
+	{
+		free (current_token->value);
+		next_token = current_token->next;
+		free (current_token);
+		current_token = next_token;
+	}
+	*token = NULL;
+}
