@@ -1,6 +1,6 @@
 .DS_Store
 main/*.o
 libft/*.o
-libft/libft.a
-libft.a
+parsing/*.o
+token/*.o
 minishell
