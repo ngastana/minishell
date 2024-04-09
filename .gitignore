@@ -1,6 +1,5 @@
 .DS_Store
 main/*.o
-libft/*.o
 parsing/*.o
 token/*.o
 minishell
