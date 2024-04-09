@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:04:36 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/09 13:06:06 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:32:50 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	parser_dolar(t_mini mini)
 					name = ft_find_name(mini.enviroment, cur_token->value + i);	
 					free(cur_token->value);
 					cur_token->value = ft_strjoin(true_value, name);
+					printf("IDENTIFICAR: %s\n", cur_token->value);
 					break ;
 				}
 				i++;

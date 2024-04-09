@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:21:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/09 15:09:00 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:18:22 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int argc, char **argv, char **env)
 				printf("1!!!!!!Tipo del valor de los tokens: %u\n", copy.token->type);
 				copy.token = copy.token->next;
 			} */
-//			parser_dolar(mini);
+			parser_dolar(mini);
 			exec(mini, env);
 			free(input);
 		}

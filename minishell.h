@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/08 12:49:12 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:31:56 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <errno.h>
 # include <signal.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 
 # define STDIN 0
 # define STDOUT 1
