@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:25:21 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/09 15:34:35 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:01:16 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_token	*ft_token(char *input)
 	while (*input)
 	{
 		if (!found)
-			return (NULL);
+			return (ft_clear_token(&token), NULL);
 		if (ft_space(*input))
 			input = ft_skip_spaces(input);
 		else if (!ft_strncmp(input, "<", 1) || !ft_strncmp(input, ">", 1)
@@ -31,12 +31,12 @@ t_token	*ft_token(char *input)
 			found = ft_handle_token(&input, &token);
 		else
 			found = ft_without_token(&input, &token);
- 		while (token != NULL)
+/* 		while (token != NULL)
 		{
 			printf("-Valores de los tokens: %s\n", token->value);
 			printf("--Tipo del valor de los tokens: %u\n", token->type);
 			token = token->next;
-		}
+		} */
 	}
 	return (token);
 }

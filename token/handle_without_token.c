@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:23:41 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/05 14:36:14 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:03:03 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int ft_without_token(char **input, t_token **token)
 	char	*value;
 	t_token *new_token;
 
-	(void) token;
 	tmp_input = *input;
 	i = 0;
 	while (tmp_input[i] && !ft_is_separator(tmp_input + i))
@@ -65,7 +64,6 @@ int ft_without_token(char **input, t_token **token)
 	if (!new_token)
 		return (free(value), 0);
 	*input += i;
-	free (value);
 	ft_add_token(token, new_token);
 	return (1);
 }

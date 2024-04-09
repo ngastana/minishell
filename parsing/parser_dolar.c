@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:04:36 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/09 15:32:50 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:00:54 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	parser_dolar(t_mini mini)
 
 	cur_token = mini.token;
 	i = 0;
-	while (cur_token->value != NULL)
+	printf("%s\n",cur_token->value);
+	while (cur_token->value)
 	{
 		if (cur_token->type == T_IDENTIFIER)
 		{
@@ -68,7 +69,7 @@ void	parser_dolar(t_mini mini)
 					i++;
 					true_value = ft_substr(cur_token->value, 0 ,i -1);
 					name = ft_find_name(mini.enviroment, cur_token->value + i);	
-					free(cur_token->value);
+					cur_token->value = NULL;
 					cur_token->value = ft_strjoin(true_value, name);
 					printf("IDENTIFICAR: %s\n", cur_token->value);
 					break ;

@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 11:48:04 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/08 11:09:06 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:50:49 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_add_token(t_token **token, t_token *new_token)
 	while (current && current->next)
 		current = current->next;
 	current->next = new_token;
-	*token = current;
+	new_token->prev = current;
 }
 
 int	ft_handle_token(char **input, t_token **token)

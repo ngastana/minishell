@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/09 15:31:56 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:51:22 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_token
 	t_token_type		type;
 	char				*value;
 	struct s_token		*next;
+	struct s_token		*prev;
 }	t_token;
 
 typedef struct s_mini
