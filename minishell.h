@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/05 14:35:39 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:49:12 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ typedef struct s_token
 
 typedef struct s_mini
 {
-	t_in	*in;
 	t_token	*token;
+	t_token	*parsed;
 	char	**enviroment;
 	char	*path;
 	char	**location_paths;
@@ -78,12 +78,15 @@ int		ft_space(char c);
 char	*ft_skip_spaces(char *line);
 t_token	*ft_token(char *input);
 int		ft_handle_token(char **line_ptr, t_token **token_list);
-int 	ft_without_token(char **line, t_token **token);
+int		ft_without_token(char **line, t_token **token);
 int		ft_is_quote(char c);
 int		ft_is_separator(char *s);
 char	*ft_skip_spaces(char *line);
 t_token	*ft_add_new_token(char *value, t_token_type type);
 void	ft_add_token(t_token **token, t_token *new_token);
 void	ft_clear_token(t_token **token);
+
+/*PARSING*/
+void	parser_dolar(t_mini mini);
 
 #endif

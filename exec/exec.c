@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 12:59:42 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/04 17:21:21 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:05:14 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,16 @@ void	first_child(t_mini mini, char **env)
 	char *const	*str;
 
 	i = 0;
-	str = &mini.in->content;
+	str = &mini.token->value;
 	while (mini.location_paths[i] != NULL)
 	{
 		tmp = ft_strjoin(mini.location_paths[i], "/");
-		location = ft_strjoin(tmp, mini.in->content);
+		location = ft_strjoin(tmp, mini.token->value);
 		if (access(location, X_OK) == 0)
 		{
 			if (execve(location, str, env) == -1)
 				printf("ERROR");
+			break ;
 		}
 		i++;
 		free (location);

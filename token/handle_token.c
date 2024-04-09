@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 11:48:04 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/05 14:17:36 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:09:06 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_add_token(t_token **token, t_token *new_token)
 	if (!*token)
 	{
 		*token = new_token;
-		return;
+		return ;
 	}
 	current = *token;
 	while (current && current->next)
@@ -56,7 +56,7 @@ void	ft_add_token(t_token **token, t_token *new_token)
 
 int	ft_handle_token(char **input, t_token **token)
 {
-    (void) token;
+	(void) token;
 	if (!ft_strncmp(*input, "<<", 2))
 		return (printf("T_DLESS\n"), ft_have_token(T_DLESS, input, token));
 	else if (!ft_strncmp(*input, ">>", 2))

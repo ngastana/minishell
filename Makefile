@@ -6,7 +6,7 @@
 #    By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 14:58:43 by ngastana          #+#    #+#              #
-#    Updated: 2024/04/05 14:34:38 by ngastana         ###   ########.fr        #
+#    Updated: 2024/04/09 12:23:02 by ngastana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC =	./main/minishell.c \
 		./token/handle_token.c \
 		./token/token_utils.c \
 		./token/handle_without_token.c \
+		./parsing/parser_dolar.c \
 
 OBJ = $(SRC:.c=.o)
 
