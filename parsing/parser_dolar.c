@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:04:36 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/09 17:00:54 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/16 11:05:03 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*ft_find_name(char **env, char *value)
 	int		len;
 
 	i = 0;
+	this = NULL;
 	while (env[i] != NULL && i >= 0)
 	{
 		if (ft_strlen_upper(env[i]) < ft_strlen(value))
@@ -56,29 +57,39 @@ void	parser_dolar(t_mini mini)
 	char	*true_value;
 
 	cur_token = mini.token;
-	i = 0;
-	printf("%s\n",cur_token->value);
-	while (cur_token->value)
+	while (cur_token)
 	{
 		if (cur_token->type == T_IDENTIFIER)
 		{
+			i = 0;
 			while(cur_token->value[i])
 			{
 				if (cur_token->value[i] == '$')
 				{
 					i++;
 					true_value = ft_substr(cur_token->value, 0 ,i -1);
-					name = ft_find_name(mini.enviroment, cur_token->value + i);	
-					cur_token->value = NULL;
+					name = ft_find_name(mini.enviroment, cur_token->value + i);
+					if (cur_token->value)
+						free (cur_token->value);
+					if (!name)
+					{
+						free (name);
+						cur_token->value = true_value;
+						break;
+					}
 					cur_token->value = ft_strjoin(true_value, name);
-					printf("IDENTIFICAR: %s\n", cur_token->value);
+					free(true_value);
+					free(name);
 					break ;
 				}
 				i++;
 			}
-			i = 0;
 		}
 		cur_token = cur_token->next;
 	}
-	mini.token = cur_token;
+/* 	while (mini.token)
+	{
+		printf("MINI: %s\n", mini.token->value);
+		mini.token = mini.token->next;
+	} */
 }
