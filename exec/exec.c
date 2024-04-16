@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 12:59:42 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/08 11:05:14 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:33:55 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	exec(t_mini mini, char **env)
 {
 	pid_t	pid;
 
+/* 	if (ft_is_builtin(mini.token->value))
+		ft_exec_builtin(mini.token()); */ //mal, tengo qque saber que pasale como ejecutor PEROO haba que hacer mas cosas....
 	mini.path = find_path(env);
 	mini.location_paths = ft_split(mini.path, ':');
 	pid = fork();
