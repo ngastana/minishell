@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:21:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/16 16:35:01 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/23 20:09:28 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv, char **env)
 			parser_dolar(mini);
 			parse_token(mini);
 			copy = mini;
- 			while (copy.token != NULL)
+			while (copy.token != NULL)
 			{
 				printf("Valores de los tokens: %s\n", copy.token->value);
 				printf("Tipo del valor de los tokens: %u\n", copy.token->type);

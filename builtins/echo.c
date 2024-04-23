@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 16:25:46 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/23 17:10:10 by ngastana         ###   ########.fr       */
+/*   Created: 2024/04/23 19:05:49 by ngastana          #+#    #+#             */
+/*   Updated: 2024/04/23 20:00:58 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_pwd(void)
+int	ft_echo (t_token *token)
 {
-	char	*cwd;
+	t_token	*cur_token;
 
-	cwd = NULL;
-	cwd = getcwd(cwd, 0);
-	if (!cwd)
-		return (1);
-	ft_putstr_fd(cwd, 1);
-	ft_putstr_fd("\n", 1);
+	cur_token = token;
+	while (cur_token)
+	{
+		printf("%s", cur_token->value);
+		cur_token = cur_token->next;
+    }
 	return (0);
 }

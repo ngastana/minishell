@@ -6,7 +6,7 @@
 #    By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 14:58:43 by ngastana          #+#    #+#              #
-#    Updated: 2024/04/16 13:50:44 by ngastana         ###   ########.fr        #
+#    Updated: 2024/04/23 19:52:58 by ngastana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,16 @@ LIBNAME = libft.a
 SRC =	./main/minishell.c \
 		./main/signals.c \
 		./exec/exec.c \
+		./exec/exec_builtin.c \
 		./token/token.c \
 		./token/handle_token.c \
 		./token/token_utils.c \
 		./token/handle_without_token.c \
 		./parsing/parser_dolar.c \
 		./parsing/parse_token.c \
+		./builtins/echo.c \
+		./builtins/env.c \
+		./builtins/pwd.c \
 
 OBJ = $(SRC:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:34:57 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/16 16:27:10 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:40:33 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int ft_env(char **env)
 {
-    int i;
-    
-    i = 0;
-    while (env[i])
-    {
-        ft_putendl_fd(env[i], 1);
-        i++;
-    }
-    return (0);
+	int i;
+
+	i = 0;
+	while (env[i])
+	{
+		ft_putendl_fd(env[i], 1);
+		i++;
+	}
+	return (0);
 }

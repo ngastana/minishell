@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/16 16:27:29 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/23 19:56:25 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_signals(t_mini mini);
 
 /*EXEC*/
 void	exec(t_mini mini, char **env);
-int		ft_exec_builtin(char **args);
+int		ft_exec_builtin(t_token *token, char **env);
 int		ft_is_builtin(char *arg);
 
 /*TOKENS*/
@@ -97,5 +97,6 @@ void	parse_token(t_mini mini);
 /*EXEC*/
 int	ft_env(char **env);
 int	ft_pwd(void);
+int	ft_echo (t_token *token);
 
 #endif

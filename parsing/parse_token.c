@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:51:03 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/16 15:02:06 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:44:40 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void parse_token(t_mini mini)
 	while (cur_token)
 	{
 		if (cur_token->type != T_IDENTIFIER)
-			if (cur_token->next->type != T_IDENTIFIER)
+			if (cur_token->next != NULL && cur_token->next->type != T_IDENTIFIER)
 			{
 				printf("syntax error near unexpected token `newline'\n");
 				return ;
@@ -28,4 +28,3 @@ void parse_token(t_mini mini)
 		cur_token = cur_token->next;
 	}
 }
-
