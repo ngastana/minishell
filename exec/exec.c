@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 12:59:42 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/23 19:02:47 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:24:15 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	first_child(t_mini mini, char **env)
 		if (access(location, X_OK) == 0)
 		{
 			if (execve(location, str, env) == -1)
-				printf("ERROR");
+				printf("Error execve: %s\n", strerror(errno));
 			break ;
 		}
 		i++;
@@ -49,13 +49,24 @@ void	exec(t_mini mini, char **env)
 	pid_t	pid;
 
  	if (ft_is_builtin(mini.token->value))
-		ft_exec_builtin(mini.token, mini.enviroment); //mal, tengo qque saber que pasale como ejecutor PEROO haba que hacer mas cosas....
+	{
+		ft_exec_builtin(mini.token, mini.enviroment);
+		return ;
+	}
 	mini.path = find_path(env);
 	mini.location_paths = ft_split(mini.path, ':');
 	pid = fork();
 	if (pid == -1)
-		printf("ERROR");
-	if (pid == 0)
+	{
+		free(mini.path);
+		free(mini.location_paths);
+		printf("Fork failed to create a new process.");
+		return ;
+	}
+	else if (pid == 0)
 		first_child(mini, env);
+	wait (NULL);
+	if (mini.location_paths)
+		free(mini.location_paths);
 	return ;
 }

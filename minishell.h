@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/23 19:56:25 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/25 18:17:31 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,6 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
-# define STDIN 0
-# define STDOUT 1
-# define STDERR 2
 
 typedef struct s_in
 {
@@ -70,7 +66,7 @@ typedef struct s_mini
 
 /*MAIN*/
 int		main(int argc, char **argv, char **env);
-void	ft_signals(t_mini mini);
+void	ft_signals(void);
 
 /*EXEC*/
 void	exec(t_mini mini, char **env);
@@ -98,5 +94,8 @@ void	parse_token(t_mini mini);
 int	ft_env(char **env);
 int	ft_pwd(void);
 int	ft_echo (t_token *token);
+
+/*CLEANING*/
+void	ft_clean(t_mini mini);
 
 #endif

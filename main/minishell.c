@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:21:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/23 20:09:28 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:18:44 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,24 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = readline("🤯 Minishell >");
-		ft_signals(mini);
+		ft_signals();
 		if (input)
 		{
 			take(input);
 			mini.token = ft_token(input);
+			if (!mini.token)
+				continue ;
 			parser_dolar(mini);
 			parse_token(mini);
-			copy = mini;
+ 			copy = mini;
 			while (copy.token != NULL)
 			{
 				printf("Valores de los tokens: %s\n", copy.token->value);
 				printf("Tipo del valor de los tokens: %u\n", copy.token->type);
 				copy.token = copy.token->next;
 			}
-//			exec(mini, env);
+			exec(mini, env);
+//			ft_clean(mini);			
 			free(input);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:17:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/04 17:38:23 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:10:56 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,21 @@
 static void	signals_sigin(int mini)
 {
 	(void) mini;
-	printf("\n");
-}
-
-static void	signals_sigout(int mini)
-{
-	(void) mini;
-	printf("exit\n");
+/*	ft_putstr_fd("\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay(); */
 	exit (1);
 }
 
-void	ft_signals(t_mini mini)
+void	signals_sigout(int mini)
 {
 	(void) mini;
-	signal(STDIN, signals_sigin);
-	signal(STDOUT, signals_sigout);
+	ft_putstr_fd("Quit: 3\n", 1);
+}
+
+void	ft_signals(void)
+{
+	signal(SIGINT, signals_sigin); //solo deberia de funcionar el control c
+	signal(SIGQUIT, SIG_IGN);
 }
