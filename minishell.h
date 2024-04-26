@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/25 18:17:31 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:12:54 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,23 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+# ifndef COLORS_H
+#  define COLORS_H
+
+#  define BOLD       "\001\033[1m\002"
+#  define UNDERLINE  "\001\033[4m\002"
+#  define BLACK      "\001\033[30m\002"
+#  define RED        "\001\033[31m\002"
+#  define GREEN      "\001\033[32m\002"
+#  define YELLOW     "\001\033[33m\002"
+#  define BLUE       "\001\033[34m\002"
+#  define MAGENTA    "\001\033[35m\002"
+#  define CYAN       "\001\033[36m\002"
+#  define WHITE      "\001\033[37m\002"
+#  define RESET      "\001\033[0m\002"
+
+# endif
 
 typedef struct s_in
 {

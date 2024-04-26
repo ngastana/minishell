@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:21:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/25 19:18:44 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:15:56 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **env)
 	mini = initialize_minishell(env);
 	while (1)
 	{
-		input = readline("🤯 Minishell >");
+		input = readline(BOLD YELLOW "Minishel-3.2$ " RESET);
 		ft_signals();
 		if (input)
 		{
