@@ -6,11 +6,28 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:21:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/26 16:15:56 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/28 16:00:54 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	ft_compare(const char *s1, const char *s2)
+{
+	int	i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (1);
+	while (*s1 && *s2)
+	{
+		if (*s1 != *s2)
+			return (1);
+		s1++;
+		s2++;
+	}
+	return ((*s1 || *s2) ? 1 : 0);
+}
 
 static t_mini	initialize_minishell(char **env)
 {
@@ -23,7 +40,7 @@ static t_mini	initialize_minishell(char **env)
 
 void	take(char *input)
 {
-	if (!input || !ft_strncmp(input, "exit", 4))
+	if (!input || !ft_compare(input, "exit"))
 	{
 		ft_putstr_fd("exit\n", 1);
 		exit (1);
@@ -42,7 +59,7 @@ int	main(int argc, char **argv, char **env)
 	mini = initialize_minishell(env);
 	while (1)
 	{
-		input = readline(BOLD YELLOW "Minishel-3.2$ " RESET);
+		input = readline(BOLD YELLOW "Minishell-3.2$ " RESET);
 		ft_signals();
 		if (input)
 		{
@@ -50,17 +67,16 @@ int	main(int argc, char **argv, char **env)
 			mini.token = ft_token(input);
 			if (!mini.token)
 				continue ;
-			parser_dolar(mini);
-			parse_token(mini);
+			parse(mini);
  			copy = mini;
-			while (copy.token != NULL)
+/* 			while (copy.token != NULL)
 			{
 				printf("Valores de los tokens: %s\n", copy.token->value);
 				printf("Tipo del valor de los tokens: %u\n", copy.token->type);
 				copy.token = copy.token->next;
-			}
+			} */
 			exec(mini, env);
-//			ft_clean(mini);			
+//			ft_clean(mini);	
 			free(input);
 		}
 	}

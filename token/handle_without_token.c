@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:23:41 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/09 16:03:03 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/28 17:07:54 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,32 @@ int ft_without_token(char **input, t_token **token)
 	int		i;
 	char	*value;
 	t_token *new_token;
+	int		j;
 
 	tmp_input = *input;
 	i = 0;
+	j = 0;
 	while (tmp_input[i] && !ft_is_separator(tmp_input + i))
 	{
 		if (ft_is_quote(tmp_input[i]))
 		{
+  			if (tmp_input[i] == '\'')
+				j = 1;
+			else if (tmp_input[i] == '"')
+				j = 2;
 			if (!(ft_skip_quote(tmp_input, &i)))
 			{
 				ft_clear_token(token);
-				return (printf("CIERRA LA CITA LERDO\n"), 0);
+				return (printf("Close the quotation marks\n"), 0);
 			}
 		}
 		else	
 			i++;
 	}
-	value = ft_substr(tmp_input, 0, i);
+	if (j != 0)
+		value = ft_substr(tmp_input, 1, i -2);
+	else
+		value = ft_substr(tmp_input, 0, i);
 	if (!value)
 		return (0);
 	new_token = ft_add_new_token(value, T_IDENTIFIER);

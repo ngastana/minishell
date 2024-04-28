@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 12:59:42 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/25 19:24:15 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/28 12:17:06 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ void	exec(t_mini mini, char **env)
 		return ;
 	}
 	else if (pid == 0)
+	{
 		first_child(mini, env);
+		exit (1);
+	}
 	wait (NULL);
 	if (mini.location_paths)
 		free(mini.location_paths);

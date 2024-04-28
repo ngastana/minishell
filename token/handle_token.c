@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 11:48:04 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/09 15:50:49 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/28 11:39:20 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,21 @@ int	ft_handle_token(char **input, t_token **token)
 {
 	(void) token;
 	if (!ft_strncmp(*input, "<<", 2))
-		return (printf("T_DLESS\n"), ft_have_token(T_DLESS, input, token));
+		return (ft_have_token(T_DLESS, input, token));
 	else if (!ft_strncmp(*input, ">>", 2))
-		return (printf("T_DGREAT\n"), ft_have_token(T_DGREAT, input, token));
+		return (ft_have_token(T_DGREAT, input, token));
 	else if (!ft_strncmp(*input, "<", 1))
-		return (printf("T_LESS\n"), ft_have_token(T_LESS, input, token));
+		return (ft_have_token(T_LESS, input, token));
 	else if (!ft_strncmp(*input, ">", 1))
-		return (printf("T_GREAT\n"), ft_have_token(T_GREAT, input, token));
+		return (ft_have_token(T_GREAT, input, token));
 	else if (!ft_strncmp(*input, "(", 1))
-		return (printf("T_O_PARENT\n"), ft_have_token(T_O_PARENT, input, token));
+		return (ft_have_token(T_O_PARENT, input, token));
 	else if (!ft_strncmp(*input, ")", 1))
-		return (printf("T_C_PARENT\n"), ft_have_token(T_C_PARENT, input, token));
+		return (ft_have_token(T_C_PARENT, input, token));
 	else if (!ft_strncmp(*input, "&&", 2))
-		return (printf("T_AND\n"), ft_have_token(T_AND, input, token));
+		return (ft_have_token(T_AND, input, token));
 	else if (!ft_strncmp(*input, "||", 2))
-		return (printf("T_NL\n"), ft_have_token(T_NL, input, token));
+		return (ft_have_token(T_NL, input, token));
 	else
-		return (printf("T_PIPE\n"), ft_have_token(T_PIPE, input, token));
+		return (ft_have_token(T_PIPE, input, token));
 }

@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_token.c                                      :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 10:51:03 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/23 18:44:40 by ngastana         ###   ########.fr       */
+/*   Created: 2024/04/28 13:30:33 by ngastana          #+#    #+#             */
+/*   Updated: 2024/04/28 16:05:29 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void parse_token(t_mini mini)
+void	parse(t_mini mini)
 {
-	t_token	*cur_token;
-
-	cur_token = mini.token;
-	while (cur_token)
-	{
-		if (cur_token->type != T_IDENTIFIER)
-			if (cur_token->next != NULL && cur_token->next->type != T_IDENTIFIER)
-			{
-				printf("syntax error near unexpected token `newline'\n");
-				return ;
-			}
-		cur_token = cur_token->next;
-	}
+	parse_consecutive_token(mini);
+	parse_redirection_token(mini);;
+	parser_dolar(mini);
+	parse_PIPE_token(mini);
 }

@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/26 16:12:54 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/28 17:00:44 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <string.h>
 # include <fcntl.h>
+# include <stdbool.h>
 # include <dirent.h>
 # include <sys/wait.h>
 # include <limits.h>
@@ -67,6 +68,7 @@ typedef enum e_token_type
 typedef struct s_token
 {
 	t_token_type		type;
+	bool				quotation_mark;
 	char				*value;
 	struct s_token		*next;
 	struct s_token		*prev;
@@ -84,6 +86,7 @@ typedef struct s_mini
 /*MAIN*/
 int		main(int argc, char **argv, char **env);
 void	ft_signals(void);
+int	ft_compare(const char *s1, const char *s2);
 
 /*EXEC*/
 void	exec(t_mini mini, char **env);
@@ -104,10 +107,13 @@ void	ft_add_token(t_token **token, t_token *new_token);
 void	ft_clear_token(t_token **token);
 
 /*PARSING*/
+void	parse(t_mini mini);
 void	parser_dolar(t_mini mini);
-void	parse_token(t_mini mini);
+void	parse_consecutive_token(t_mini mini);
+void	parse_PIPE_token(t_mini mini);
+void	parse_redirection_token(t_mini mini);
 
-/*EXEC*/
+/*EXEC_BUILTIN*/
 int	ft_env(char **env);
 int	ft_pwd(void);
 int	ft_echo (t_token *token);
