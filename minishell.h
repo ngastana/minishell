@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: emunoz <emunoz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/28 17:00:44 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:58:19 by emunoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef enum e_token_type
 typedef struct s_token
 {
 	t_token_type		type;
-	bool				quotation_mark;
+	int					quotation_mark;
 	char				*value;
 	struct s_token		*next;
 	struct s_token		*prev;
@@ -85,8 +85,7 @@ typedef struct s_mini
 
 /*MAIN*/
 int		main(int argc, char **argv, char **env);
-void	ft_signals(void);
-int	ft_compare(const char *s1, const char *s2);
+int		ft_compare(const char *s1, const char *s2);
 
 /*EXEC*/
 void	exec(t_mini mini, char **env);
@@ -102,7 +101,7 @@ int		ft_without_token(char **line, t_token **token);
 int		ft_is_quote(char c);
 int		ft_is_separator(char *s);
 char	*ft_skip_spaces(char *line);
-t_token	*ft_add_new_token(char *value, t_token_type type);
+t_token	*ft_add_new_token(char *value, int mark, t_token_type type);
 void	ft_add_token(t_token **token, t_token *new_token);
 void	ft_clear_token(t_token **token);
 
@@ -117,6 +116,12 @@ void	parse_redirection_token(t_mini mini);
 int	ft_env(char **env);
 int	ft_pwd(void);
 int	ft_echo (t_token *token);
+
+/*SIGNALS*/
+void	signal_handlers(void);
+void	handle_sigint(int sig);
+void	handle_sigquit(int sig);
+void	handle_eof(void);
 
 /*CLEANING*/
 void	ft_clean(t_mini mini);

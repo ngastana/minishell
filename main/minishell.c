@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: emunoz <emunoz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:21:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/28 16:00:54 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:01:32 by emunoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	ft_compare(const char *s1, const char *s2)
 {
-	int	i;
-
-	i = 0;
 	if (!s1 || !s2)
 		return (1);
 	while (*s1 && *s2)
@@ -53,14 +50,14 @@ int	main(int argc, char **argv, char **env)
 {
 	t_mini	mini;
 	char	*input;
-	t_mini	copy;
+	//t_mini	copy;
 
 	((void)argc, (void)argv);
 	mini = initialize_minishell(env);
+	signal_handlers();
 	while (1)
 	{
 		input = readline(BOLD YELLOW "Minishell-3.2$ " RESET);
-		ft_signals();
 		if (input)
 		{
 			take(input);
@@ -68,8 +65,8 @@ int	main(int argc, char **argv, char **env)
 			if (!mini.token)
 				continue ;
 			parse(mini);
- 			copy = mini;
-/* 			while (copy.token != NULL)
+/* 			copy = mini;
+			while (copy.token != NULL)
 			{
 				printf("Valores de los tokens: %s\n", copy.token->value);
 				printf("Tipo del valor de los tokens: %u\n", copy.token->type);
@@ -79,6 +76,8 @@ int	main(int argc, char **argv, char **env)
 //			ft_clean(mini);	
 			free(input);
 		}
+		else
+			handle_eof();
 	}
 	return (0);
 }

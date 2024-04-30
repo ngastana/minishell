@@ -3,33 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: emunoz <emunoz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:17:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/25 19:10:56 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:27:03 by emunoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	signals_sigin(int mini)
+void	handle_sigint(int sig) 
 {
-	(void) mini;
-/*	ft_putstr_fd("\n", 1);
+   	printf("\n");
 	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay(); */
-	exit (1);
+	rl_redisplay();
+	(void) sig;
 }
 
-void	signals_sigout(int mini)
+void	handle_sigquit(int sig) 
 {
-	(void) mini;
-	ft_putstr_fd("Quit: 3\n", 1);
+    printf("Ctrl-\\ pressed. Quitting.\n");
+	(void)sig;
+    exit(EXIT_SUCCESS);
 }
 
-void	ft_signals(void)
+void	handle_eof(void) 
 {
-	signal(SIGINT, signals_sigin); //solo deberia de funcionar el control c
-	signal(SIGQUIT, SIG_IGN);
+    printf("Ctrl-D pressed. Exiting.\n");
+    exit(EXIT_SUCCESS);
+}
+
+void	signal_handlers(void)
+{
+    signal(SIGINT, handle_sigint);
+    signal(SIGQUIT, handle_sigquit);
 }

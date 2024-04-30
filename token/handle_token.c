@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handle_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: emunoz <emunoz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 11:48:04 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/28 11:39:20 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/29 18:00:19 by emunoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_token	*ft_add_new_token(char *value, t_token_type type)
+t_token	*ft_add_new_token(char *value, int mark, t_token_type type)
 {
 	t_token	*new_token;
 
@@ -21,6 +21,7 @@ t_token	*ft_add_new_token(char *value, t_token_type type)
 		return (NULL);
 	new_token->value = value;
 	new_token->type = type;
+	new_token->quotation_mark = mark;
 	return (new_token);
 }
 
@@ -28,7 +29,7 @@ static int	ft_have_token(t_token_type type, char **input, t_token **token)
 {
 	t_token	*new_token;
 
-	new_token = ft_add_new_token(NULL, type);
+	new_token = ft_add_new_token(NULL, 0, type);
 	if (!new_token)
 		return (0);
 	ft_add_token(token, new_token);

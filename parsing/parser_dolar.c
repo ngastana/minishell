@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_dolar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: emunoz <emunoz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:04:36 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/16 11:05:03 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:49:14 by emunoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,21 @@ void	parser_dolar(t_mini mini)
 			i = 0;
 			while(cur_token->value[i])
 			{
-				if (cur_token->value[i] == '$')
+				if (cur_token->value[i] == '$' && cur_token->quotation_mark != 1)
 				{
-					i++;
-					true_value = ft_substr(cur_token->value, 0 ,i -1);
-					name = ft_find_name(mini.enviroment, cur_token->value + i);
-					if (cur_token->value)
-						free (cur_token->value);
-					if (!name)
+					if (cur_token->quotation_mark != 1)
 					{
-						free (name);
-						cur_token->value = true_value;
-						break;
+						i++;
+						true_value = ft_substr(cur_token->value, 0 ,i -1);
+						name = ft_find_name(mini.enviroment, cur_token->value + i);
+						if (cur_token->value)
+							free (cur_token->value);
+						if (!name)
+						{
+							free (name);
+							cur_token->value = true_value;
+							break;
+						}
 					}
 					cur_token->value = ft_strjoin(true_value, name);
 					free(true_value);
