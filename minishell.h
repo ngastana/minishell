@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emunoz <emunoz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/29 17:58:19 by emunoz           ###   ########.fr       */
+/*   Updated: 2024/04/30 18:51:29 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	parse_redirection_token(t_mini mini);
 int	ft_env(char **env);
 int	ft_pwd(void);
 int	ft_echo (t_token *token);
+int	ft_cd(t_token *current, char **env);
 
 /*SIGNALS*/
 void	signal_handlers(void);

@@ -6,7 +6,7 @@
 #    By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 14:58:43 by ngastana          #+#    #+#              #
-#    Updated: 2024/04/30 16:38:52 by ngastana         ###   ########.fr        #
+#    Updated: 2024/04/30 18:44:12 by ngastana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC =	./main/minishell.c \
 		./builtins/echo.c \
 		./builtins/env.c \
 		./builtins/pwd.c \
+		./builtins/cd.c \
 		./cleaning.c
 
 OBJ = $(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:05:49 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/28 16:47:28 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/30 17:33:28 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ int	ft_echo (t_token *token)
 			cur_token = cur_token->next;
 			cur_token = cur_token->next;			
 		}
-		if (cur_token->next != NULL && cur_token->type == T_IDENTIFIER )
-			printf("%s ", cur_token->value);
-		else if (cur_token->type == T_IDENTIFIER)
+		if (cur_token != NULL && cur_token->next == NULL && cur_token->type == T_IDENTIFIER)
 			printf("%s\n", cur_token->value);			
-		cur_token = cur_token->next;
-    }
+		else if (cur_token != NULL && cur_token->type == T_IDENTIFIER )
+			printf("%s ", cur_token->value);
+		if (cur_token != NULL)
+			cur_token = cur_token->next;
+	}
 	return (0);
 }

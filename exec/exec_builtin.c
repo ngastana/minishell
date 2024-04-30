@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:08 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/28 12:07:23 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:09:36 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	ft_exec_builtin(t_token *token, char **env)
 	current = token;
 	if (ft_compare(current->value, "echo") == 0)
 		return (ft_echo(token));
-/* 	if (ft_strncmp(current->value, "cd", 2) == 0)
-		return (ft_cd(current->next->value)); */
+	if (ft_strncmp(current->value, "cd", 2) == 0)
+		return (ft_cd(current->next, env));
 	if (ft_compare(current->value, "env") == 0)
 		return (ft_env(env));
 	if (ft_compare(current->value, "pwd") == 0)
