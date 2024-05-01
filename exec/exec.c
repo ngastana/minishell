@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 12:59:42 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/01 13:10:55 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:03:53 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,38 +44,43 @@ void	first_child(t_mini mini, char **env)
 	}
 }
 
-/* static int has_redirection(t_mini mini)
+static int has_redirection(t_mini mini)
 {
-	while (mini.token)
+	t_token	*current_token;
+
+	current_token = mini.token;
+	while (current_token)
 	{
-		if (mini.token->type == T_DGREAT)
+		if (current_token->type == T_GREAT && current_token->next)
 		{
-			mini.outfile = open(mini.token->next->value, O_TRUNC | O_CREAT | O_RDWR, 0777);
+			mini.outfile = open(current_token->next->value, O_TRUNC | O_CREAT | O_RDWR, 0777);
 			if (mini.outfile < 0)
 				return (printf("Error outfile: %s\n", strerror(errno)), 0);			
 		}
-		else if (mini.token->type == T_GREAT)
+		else if (current_token->type == T_DGREAT && current_token->next)
 		{
-			mini.outfile = open(mini.token->next->value, O_CREAT | O_RDWR, 0777);
+			mini.outfile = open(current_token->next->value, O_CREAT | O_RDWR, 0777);
 			if (mini.outfile < 0)
 				return (printf("Error outfile: %s\n", strerror(errno)), 0);			
 		}
-		else if (mini.token->type == T_LESS)
+		else if (current_token->type == T_LESS && current_token->next)
 		{
-			mini.infile = open(mini.token->value, O_RDONLY);
+			mini.infile = open(current_token->next->value, O_RDONLY);
 			if (mini.infile < 0)
 				return (printf("Error infile: %s\n", strerror(errno)), 0);	
 		}
+		current_token = current_token->next;
 	}
 	return (1);
-} */
+}
 
 void	exec(t_mini mini, char **env)
 {
 	pid_t	pid;
 
-/* 	if (has_redirection(mini) == 0)
-		return ; */
+	
+ 	if (has_redirection(mini) == 0)
+		return ;
  	if (ft_is_builtin(mini.token->value))
 	{
 		ft_exec_builtin(mini.token, mini.enviroment);

@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:17:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/30 16:48:41 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:52:02 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	handle_sigint(int sig) 
 {
-   	printf("\n");
+	ft_putstr_fd("\n", 1);
+	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 	(void) sig;

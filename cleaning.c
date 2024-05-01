@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:03:12 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/25 18:40:59 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/01 19:21:48 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_del(void *ptr)
 	ptr = NULL;
 }
 
-static void	ft_clear(char **matrix)
+void	ft_clear(char **matrix)
 {
 	int	m;
 

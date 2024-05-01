@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 17:32:21 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/30 20:10:31 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:56:08 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,14 @@ int	ft_cd(t_token *current, char **env)
 {
 	char	*cwd;
 	
- 	if (!current)
+ 	if (!current || (current->value[0] == '~' && current->value[1] == '\0') ||
+	 (current->value[0] == '-' && current->value[1] == '-' && current->value[2] == '\0'))
 		return (go_home(env), 0);
+	else if ((current->value[0] == '-' && current->value[1] == '\0'))
+	{
+		update_env("PWD", get_envlst("OLDPWD", env), env);
+		return (printf("%s\n", get_envlst("PWD", env)), 0);
+	}
 	if (chdir(current->value) != 0)
 		return (printf("a donde vas majo\n"), 1);
 	update_env("OLDPWD", get_envlst("PWD", env), env);

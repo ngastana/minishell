@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/01 13:09:28 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/01 21:50:21 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
 
 # endif
 
+
+
 typedef struct s_in
 {
 	char				*content;
@@ -78,12 +80,15 @@ typedef struct s_mini
 {
 	t_token	*token;
 	t_token	*parsed;
+	bool	signal_exec;
 	int		infile;
 	int		outfile;
 	char	**enviroment;
 	char	*path;
 	char	**location_paths;
 }	t_mini;
+
+extern	t_mini	g_mini;
 
 /*MAIN*/
 int		main(int argc, char **argv, char **env);
@@ -115,10 +120,19 @@ void	parse_PIPE_token(t_mini mini);
 void	parse_DLESS_token(t_mini mini);
 
 /*EXEC_BUILTIN*/
-int	ft_env(char **env);
-int	ft_pwd(void);
-int	ft_echo (t_token *token);
-int	ft_cd(t_token *current, char **env);
+int		ft_env(char **env);
+int		ft_pwd(void);
+int		ft_echo (t_token *token);
+int		ft_cd(t_token *current, char **env);
+/*EXEC_BUINTIN_EXPORT*/
+int		ft_export(t_token *token, char **env);
+void	export_sort(char **export);
+int 	search_export(char *str, char **export);
+int		check_value(char *str);
+char 	**add_to_export(char *str, char **export);
+void	change_value(char *str, char **export);
+void 	add_to_env(char *str, char **env, int flag);
+
 
 /*SIGNALS*/
 void	signal_handlers(void);
@@ -128,5 +142,6 @@ void	handle_eof(void);
 
 /*CLEANING*/
 void	ft_clean(t_mini mini);
+void	ft_clear(char **matrix);
 
 #endif
