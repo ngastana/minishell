@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emunoz <emunoz@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 12:59:42 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/29 16:48:32 by emunoz           ###   ########.fr       */
+/*   Updated: 2024/05/01 13:10:55 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,38 @@ void	first_child(t_mini mini, char **env)
 	}
 }
 
+/* static int has_redirection(t_mini mini)
+{
+	while (mini.token)
+	{
+		if (mini.token->type == T_DGREAT)
+		{
+			mini.outfile = open(mini.token->next->value, O_TRUNC | O_CREAT | O_RDWR, 0777);
+			if (mini.outfile < 0)
+				return (printf("Error outfile: %s\n", strerror(errno)), 0);			
+		}
+		else if (mini.token->type == T_GREAT)
+		{
+			mini.outfile = open(mini.token->next->value, O_CREAT | O_RDWR, 0777);
+			if (mini.outfile < 0)
+				return (printf("Error outfile: %s\n", strerror(errno)), 0);			
+		}
+		else if (mini.token->type == T_LESS)
+		{
+			mini.infile = open(mini.token->value, O_RDONLY);
+			if (mini.infile < 0)
+				return (printf("Error infile: %s\n", strerror(errno)), 0);	
+		}
+	}
+	return (1);
+} */
+
 void	exec(t_mini mini, char **env)
 {
 	pid_t	pid;
 
+/* 	if (has_redirection(mini) == 0)
+		return ; */
  	if (ft_is_builtin(mini.token->value))
 	{
 		ft_exec_builtin(mini.token, mini.enviroment);

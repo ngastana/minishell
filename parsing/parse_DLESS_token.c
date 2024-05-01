@@ -6,29 +6,11 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 11:41:15 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/28 16:35:58 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/01 13:05:44 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static void	parse_LESS_token(t_mini mini)
-{
-	t_token	*cur_token;
-	int infile;
-
-	cur_token = mini.token;
-	if (cur_token)
-	{
-		if (cur_token->type == T_LESS)
-		{
-			cur_token = cur_token->next;
-			infile = open(cur_token->value, O_RDONLY);
-			if (infile < 0)
-				printf("%s : No such file or directory\n", cur_token->value);
-		}
-	}
-}	
 
 static void DLESS_function(t_token	*cur_token)
 {
@@ -37,7 +19,7 @@ static void DLESS_function(t_token	*cur_token)
 	return;
 }
 
-static void parse_DLESS_token(t_mini mini)
+void parse_DLESS_token(t_mini mini)
 {
 	t_token	*cur_token;
 
@@ -64,10 +46,4 @@ static void parse_DLESS_token(t_mini mini)
 		}
 		cur_token = cur_token->next;		
 	}
-}
-
-void	parse_redirection_token(t_mini mini)
-{
-	parse_LESS_token(mini);
-	parse_DLESS_token(mini);
 }

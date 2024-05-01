@@ -6,7 +6,7 @@
 #    By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 14:58:43 by ngastana          #+#    #+#              #
-#    Updated: 2024/04/30 18:44:12 by ngastana         ###   ########.fr        #
+#    Updated: 2024/05/01 13:06:17 by ngastana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC =	./main/minishell.c \
 		./parsing/parse.c \
 		./parsing/parser_dolar.c \
 		./parsing/parse_consecutive_token.c \
-		./parsing/parse_redirection_token.c \
+		./parsing/parse_DLESS_token.c \
 		./parsing/parse_PIPE_token.c \
 		./builtins/echo.c \
 		./builtins/env.c \

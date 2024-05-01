@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/30 18:51:29 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/01 13:09:28 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ typedef struct s_mini
 {
 	t_token	*token;
 	t_token	*parsed;
+	int		infile;
+	int		outfile;
 	char	**enviroment;
 	char	*path;
 	char	**location_paths;
@@ -110,7 +112,7 @@ void	parse(t_mini mini);
 void	parser_dolar(t_mini mini);
 void	parse_consecutive_token(t_mini mini);
 void	parse_PIPE_token(t_mini mini);
-void	parse_redirection_token(t_mini mini);
+void	parse_DLESS_token(t_mini mini);
 
 /*EXEC_BUILTIN*/
 int	ft_env(char **env);
