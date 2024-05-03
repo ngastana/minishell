@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:21:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/30 19:53:58 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:42:12 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_mini	initialize_minishell(char **env)
 	t_mini	mini;
 
 	ft_memset(&mini, 0, sizeof(t_mini));
-	mini.enviroment = env;
+	mini.enviroment = create_matrix(env, 1);
 	return (mini);
 }
 

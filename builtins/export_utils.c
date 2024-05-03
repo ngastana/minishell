@@ -6,13 +6,13 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 19:06:56 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/01 22:25:38 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:10:51 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int search_export(char *str, char **export)
+int search_in_matrix(char *str, char **export)
 {
 	int i;
 	int len;
@@ -34,10 +34,10 @@ int	check_value(char *str)
 {
 	if (ft_isalpha(str[0]) || str[0] == '_')
 		return (1);
-	return(printf(" export: `%c': not a valid identifier", str[0]) , 0);
+	return(printf(" export: `%c': not a valid identifier\n", str[0]) , 0);
 }
 
-char **add_to_export(char *str, char **export)
+char **add_to_matrix(char *str, char **export)
 {
 	int	count;
 	char **tmp_export;
@@ -50,8 +50,7 @@ char **add_to_export(char *str, char **export)
 	while (export[++count])
 		tmp_export[count] = ft_strdup(export[count]);	
 	tmp_export[count] = ft_strdup(str);
-	ft_clear(export);
-	export_sort(tmp_export);
+	/* ft_clear(export); */
 	return (tmp_export);
 }
 
@@ -70,14 +69,13 @@ void	change_value(char *str, char **export)
 		{
 			free(export[i]);
 			export[i] = ft_strdup(str);
-			export_sort(export);
 			return ;
 		}
 		i++;
 	}
 }
 
-void add_to_env(char *str, char **env, int flag)
+/* void add_to_env(char *str, char **env, int flag)
 {
 	int i;
 	int len;
@@ -107,4 +105,4 @@ void add_to_env(char *str, char **env, int flag)
 			i++;
 		}
 	}
-}
+} */

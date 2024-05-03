@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/01 21:50:21 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:03:27 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_token
 	char				*value;
 	struct s_token		*next;
 	struct s_token		*prev;
+	struct s_mini		*mini;
 }	t_token;
 
 typedef struct s_mini
@@ -127,11 +128,12 @@ int		ft_cd(t_token *current, char **env);
 /*EXEC_BUINTIN_EXPORT*/
 int		ft_export(t_token *token, char **env);
 void	export_sort(char **export);
-int 	search_export(char *str, char **export);
+int 	search_in_matrix(char *str, char **export);
 int		check_value(char *str);
-char 	**add_to_export(char *str, char **export);
+char 	**add_to_matrix(char *str, char **export);
 void	change_value(char *str, char **export);
-void 	add_to_env(char *str, char **env, int flag);
+/* void 	add_to_env(char *str, char **env, int flag); */
+char	**create_matrix(char **env, int flag);
 
 
 /*SIGNALS*/

@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:34:57 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/01 18:43:11 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:13:23 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@ int ft_env(char **env)
 {
 	int i;
 
-	i = 0;
-	while (env[i])
-	{
-		ft_putendl_fd(env[i], 1);
-		i++;
-	}
+	i = -1;
+	while (env[++i])
+		printf("%s\n", env[i]);
 	return (0);
 }
