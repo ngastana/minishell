@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/03 18:03:27 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:15:10 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_mini
 	int		infile;
 	int		outfile;
 	char	**enviroment;
+	char	**export;
 	char	*path;
 	char	**location_paths;
 }	t_mini;
@@ -97,7 +98,7 @@ int		ft_compare(const char *s1, const char *s2);
 
 /*EXEC*/
 void	exec(t_mini mini, char **env);
-int		ft_exec_builtin(t_token *token, char **env);
+int		ft_exec_builtin(t_token *token);
 int		ft_is_builtin(char *arg);
 
 /*TOKENS*/
@@ -116,6 +117,7 @@ void	ft_clear_token(t_token **token);
 /*PARSING*/
 void	parse(t_mini mini);
 void	parser_dolar(t_mini mini);
+size_t 	ft_strlen_same(char *str);
 void	parse_consecutive_token(t_mini mini);
 void	parse_PIPE_token(t_mini mini);
 void	parse_DLESS_token(t_mini mini);
@@ -126,14 +128,14 @@ int		ft_pwd(void);
 int		ft_echo (t_token *token);
 int		ft_cd(t_token *current, char **env);
 /*EXEC_BUINTIN_EXPORT*/
-int		ft_export(t_token *token, char **env);
+int		ft_export(t_token *token);
 void	export_sort(char **export);
 int 	search_in_matrix(char *str, char **export);
 int		check_value(char *str);
 char 	**add_to_matrix(char *str, char **export);
 void	change_value(char *str, char **export);
-/* void 	add_to_env(char *str, char **env, int flag); */
 char	**create_matrix(char **env, int flag);
+int		ft_unset(t_token *token);
 
 
 /*SIGNALS*/

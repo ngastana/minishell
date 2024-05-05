@@ -6,13 +6,13 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:25:08 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/03 17:58:05 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:03:32 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_exec_builtin(t_token *token, char **env)
+int	ft_exec_builtin(t_token *token)
 {
 	t_token *current;
 	
@@ -20,15 +20,15 @@ int	ft_exec_builtin(t_token *token, char **env)
 	if (ft_compare(current->value, "echo") == 0)
 		return (ft_echo(token));
 	if (ft_strncmp(current->value, "cd", 2) == 0)
-		return (ft_cd(current->next, env));
+		return (ft_cd(current->next, g_mini.enviroment));
 	if (ft_compare(current->value, "env") == 0)
-		return (ft_env(env));
+		return (ft_env(g_mini.enviroment));
 	if (ft_compare(current->value, "pwd") == 0)
 		return (ft_pwd());
 	if (ft_strncmp(current->value, "export", 6) == 0)
-		return (ft_export(current->next, env));
-/*	if (ft_strncmp(current->value, "unset", 5) == 0)
-		return (ft_unset(current->value)); */
+		return (ft_export(current->next));
+	if (ft_strncmp(current->value, "unset", 5) == 0)
+		return (ft_unset(current->next));
 	return (1);
 }
 

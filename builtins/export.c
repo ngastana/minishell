@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:09:42 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/03 18:20:38 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:21:59 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,13 @@ static void print_export(char **export)
 	}
 }
 
-int ft_export(t_token *token, char **env)
+int ft_export(t_token *token)
 {
-	static char	**export;
-	static int flag;
 	t_token	*current;
  
 	current = token;
-	if (flag == 0)
-	{
-		export = create_matrix(env, 0);
-		export_sort(export);
-		flag = 1;
-	}
 	if (!token)
-		return (print_export(export), 0);
+		return (print_export(g_mini.export), 0);
 	else
 		while (current)
 		{
@@ -78,25 +70,23 @@ int ft_export(t_token *token, char **env)
 				current = current->next;
 				continue ;
 			}
-			else if (!search_in_matrix(current->value, export)) //nosta
+			else if (!search_in_matrix(current->value, g_mini.export)) //nosta
 			{
-				export = add_to_matrix(current->value, export);
+				g_mini.export = add_to_matrix(current->value, g_mini.export);
 				if (ft_strchr(current->value, '='))
-					env = add_to_matrix(current->value, env);
+					g_mini.enviroment = add_to_matrix(current->value, g_mini.enviroment);
 			}
 			else //siesta
 			{
-				change_value(current->value, export);
-				if (search_in_matrix(current->value, env))
-					change_value(current->value, env);
+				change_value(current->value, g_mini.export);
+				if (search_in_matrix(current->value, g_mini.enviroment))
+					change_value(current->value, g_mini.enviroment);
 				else if (ft_strchr(current->value, '='))
-					env = add_to_matrix(current->value, env);
-			}
-			ft_env(env);			
+					g_mini.enviroment = add_to_matrix(current->value, g_mini.enviroment);
+			}			
 			if (!current->next)
 				return (0);
 			current = current->next;
 		}
-		
 	return (0);
 }

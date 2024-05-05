@@ -6,11 +6,13 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:21:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/03 18:42:12 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:20:50 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+t_mini	g_mini;
 
 int	ft_compare(const char *s1, const char *s2)
 {
@@ -32,6 +34,7 @@ static t_mini	initialize_minishell(char **env)
 
 	ft_memset(&mini, 0, sizeof(t_mini));
 	mini.enviroment = create_matrix(env, 1);
+	mini.export = create_matrix(env, 0);
 	return (mini);
 }
 
@@ -48,12 +51,11 @@ void	take(char *input)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_mini	mini;
 	char	*input;
 	//t_mini	copy;
 
 	((void)argc, (void)argv);
-	mini = initialize_minishell(env);
+	g_mini = initialize_minishell(env);
 	signal_handlers();
 	while (1)
 	{
@@ -61,10 +63,10 @@ int	main(int argc, char **argv, char **env)
 		if (input)
 		{
 			take(input);
-			mini.token = ft_token(input);
-			if (!mini.token)
+			g_mini.token = ft_token(input);
+			if (!g_mini.token)
 				continue ;
-			parse(mini);
+			parse(g_mini);
 /* 			copy = mini;
 			while (copy.token != NULL)
 			{
@@ -72,7 +74,7 @@ int	main(int argc, char **argv, char **env)
 				printf("Tipo del valor de los tokens: %u\n", copy.token->type);
 				copy.token = copy.token->next;
 			} */
-			exec(mini, env);
+			exec(g_mini, env);
 //			ft_clean(mini);	
 			free(input);
 		}

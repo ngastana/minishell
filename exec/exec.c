@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 12:59:42 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/03 18:35:40 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/05 15:42:37 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	exec(t_mini mini, char **env)
 		return ;
  	if (ft_is_builtin(mini.token->value))
 	{
-		ft_exec_builtin(mini.token, mini.enviroment);
+		ft_exec_builtin(mini.token);
 		return ;
 	}
 	mini.path = find_path(env);

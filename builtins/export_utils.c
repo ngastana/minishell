@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 19:06:56 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/03 18:10:51 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/05 14:37:56 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char **add_to_matrix(char *str, char **export)
 	while (export[++count])
 		tmp_export[count] = ft_strdup(export[count]);	
 	tmp_export[count] = ft_strdup(str);
-	/* ft_clear(export); */
+	ft_clear(export);
 	return (tmp_export);
 }
 
