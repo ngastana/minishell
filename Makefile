@@ -6,7 +6,7 @@
 #    By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 14:58:43 by ngastana          #+#    #+#              #
-#    Updated: 2024/05/05 16:15:44 by ngastana         ###   ########.fr        #
+#    Updated: 2024/05/05 16:33:05 by ngastana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC =	./main/minishell.c \
 		./main/signals.c \
 		./exec/exec.c \
 		./exec/exec_builtin.c \
+		./exec/exec_redir.c \
 		./token/token.c \
 		./token/handle_token.c \
 		./token/token_utils.c \

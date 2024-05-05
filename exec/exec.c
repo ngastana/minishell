@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 12:59:42 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/05 15:42:37 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/05 18:26:07 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,92 +19,79 @@ char	*find_path(char **envp)
 	return (*envp + 5);
 }
 
-void	first_child(t_mini mini, char **env)
+void	first_child(void)
 {
 	int			i;
 	char		*location;
 	char		*tmp;
-	char *const	*str;
+	int			fd[2];
+	char		**str;
+	t_mini		cur_mini;
+	char const	*str1;
 
+	dup2(g_mini.infile, STDIN_FILENO);
+	dup2(g_mini.outfile, STDOUT_FILENO);
+	close(fd[0]);
+	close(g_mini.infile);
+	close(fd[1]);
 	i = 0;
-	str = &mini.token->value;
-	while (mini.location_paths[i] != NULL)
+	cur_mini = g_mini;
+	str1 = ft_strdup(g_mini.token->value);
+	while (cur_mini.token->next && (cur_mini.token->next->type == T_IDENTIFIER || cur_mini.token->next->type == T_LESS))
 	{
-		tmp = ft_strjoin(mini.location_paths[i], "/");
-		location = ft_strjoin(tmp, mini.token->value);
+		cur_mini.token = cur_mini.token->next;
+		if (cur_mini.token->next && cur_mini.token->type == T_LESS)
+			cur_mini.token = cur_mini.token->next;
+		str1 = ft_strjoin(str1, " ");
+		str1 = ft_strjoin(str1, cur_mini.token->value);
+	}
+	str = ft_split(str1, ' ');
+	while (cur_mini.location_paths[i] != NULL)
+	{
+		tmp = ft_strjoin(cur_mini.location_paths[i], "/");
+		location = ft_strjoin(tmp, str[0]);
 		if (access(location, X_OK) == 0)
-		{
-			if (execve(location, str, env) == -1)
+		{	
+			if (execve(location, str, cur_mini.enviroment) == -1)
 				printf("Error execve: %s\n", strerror(errno));
 			break ;
 		}
 		i++;
 		free (location);
 		free (tmp);
+		//free (str1);
+		//ft_clear(str);
 	}
 }
 
-static int has_redirection(t_mini mini)
-{
-	t_token	*current_token;
-
-	current_token = mini.token;
-	while (current_token)
-	{
-		if (current_token->type == T_GREAT && current_token->next)
-		{
-			mini.outfile = open(current_token->next->value, O_TRUNC | O_CREAT | O_RDWR, 0777);
-			if (mini.outfile < 0)
-				return (printf("Error outfile: %s\n", strerror(errno)), 0);
-			dup2(mini.outfile, STDOUT_FILENO);	
-		}
-		else if (current_token->type == T_DGREAT && current_token->next)
-		{
-			mini.outfile = open(current_token->next->value, O_CREAT | O_RDWR, 0777);
-			if (mini.outfile < 0)
-				return (printf("Error outfile: %s\n", strerror(errno)), 0);
-			dup2(mini.outfile, STDOUT_FILENO);		
-		}
-		else if (current_token->type == T_LESS && current_token->next)
-		{
-			mini.infile = open(current_token->next->value, O_RDONLY);
-			if (mini.infile < 0)
-				return (printf("Error infile: %s\n", strerror(errno)), 0);
-			dup2(mini.infile, STDIN_FILENO);
-		}
-		current_token = current_token->next;
-	}
-	return (1);
-}
-
-void	exec(t_mini mini, char **env)
+void	exec(void)
 {
 	pid_t	pid;
 
-	 	if (has_redirection(mini) == 0)
+	if (has_redirection(g_mini) == 0)
 		return ;
- 	if (ft_is_builtin(mini.token->value))
+ 	if (ft_is_builtin(g_mini.token->value))
 	{
-		ft_exec_builtin(mini.token);
+		ft_exec_builtin(g_mini.token);
 		return ;
 	}
-	mini.path = find_path(env);
-	mini.location_paths = ft_split(mini.path, ':');
+	g_mini.path = find_path(g_mini.enviroment);
+	g_mini.location_paths = ft_split(g_mini.path, ':');
 	pid = fork();
 	if (pid == -1)
 	{
-		free(mini.path);
-		free(mini.location_paths);
+		free(g_mini.path);
+		free(g_mini.location_paths);
 		printf("Fork failed to create a new process.");
 		return ;
 	}
 	else if (pid == 0)
 	{
-		first_child(mini, env);
+		first_child();
 		exit (1);
 	}
 	wait (NULL);
-	if (mini.location_paths)
-		free(mini.location_paths);
+	if (g_mini.location_paths)
+		free(g_mini.location_paths);
 	return ;
 }

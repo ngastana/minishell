@@ -6,7 +6,7 @@
 /*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/05 16:15:10 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/05 17:54:30 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int		main(int argc, char **argv, char **env);
 int		ft_compare(const char *s1, const char *s2);
 
 /*EXEC*/
-void	exec(t_mini mini, char **env);
+void	exec(void);
 int		ft_exec_builtin(t_token *token);
 int		ft_is_builtin(char *arg);
 
@@ -137,6 +137,8 @@ void	change_value(char *str, char **export);
 char	**create_matrix(char **env, int flag);
 int		ft_unset(t_token *token);
 
+/*EXER_REDIR*/
+int	has_redirection(t_mini mini);
 
 /*SIGNALS*/
 void	signal_handlers(void);
