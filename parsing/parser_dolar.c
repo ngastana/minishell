@@ -49,14 +49,14 @@ static char	*ft_find_name(char *value)
 	return(this);
 }
 
-void	parser_dolar(t_mini mini)
+int	parser_dolar(void)
 {
 	t_token *cur_token;
 	int		i;
 	char	*name;
 	char	*true_value;
 
-	cur_token = mini.token;
+	cur_token = g_mini.token;
 	while (cur_token)
 	{
 		if (cur_token->type == T_IDENTIFIER)
@@ -95,4 +95,5 @@ void	parser_dolar(t_mini mini)
 		printf("MINI: %s\n", mini.token->value);
 		mini.token = mini.token->next;
 	} */
+	return (0);
 }

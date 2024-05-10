@@ -12,68 +12,69 @@
 
 #include "../minishell.h"
 
-static void update_env(char *old_env, char *new_env, char **env)
+static void update_env(char *old_env, char *new_env)
 {
-	size_t i;
-	size_t j;
-	static int memo;
-    char *new_env_str;
+    char	*new_env_str;
+	int		i;
 
-	i = -1;
-	j = 0;
-	while (ft_strncmp(old_env, *env, ft_strlen(old_env)) && env)
-		env++;
-	if (env)
+	i = 0;
+	while (g_mini.enviroment[i] && (ft_strncmp(old_env, g_mini.enviroment[i], ft_strlen(old_env))))
+		i++;
+	if (g_mini.enviroment[i])
 	{
 		new_env_str = malloc(sizeof(char *) * (ft_strlen(old_env) + ft_strlen(new_env) + 1));
 		if (!new_env_str)
 			return ;
-		ft_strlcpy(new_env_str, *env, ft_strlen(old_env) +1);
+		ft_strlcpy(new_env_str, g_mini.enviroment[i], ft_strlen(old_env) +1);
 		new_env_str[ft_strlen(old_env)] = '=';
 		ft_strlcpy(new_env_str + ft_strlen(old_env) +1, new_env, ft_strlen(new_env) +1);		
 		new_env_str[ft_strlen(old_env) + ft_strlen(new_env) + 1] = '\0';
-		*env = new_env_str;
-		memo = 1;
+		g_mini.enviroment[i] = new_env_str;
 	}
 }
 
-static char *get_envlst(char *new_env, char **env)
+static char *get_envlst(char *new_env)
 {
-	while (ft_strncmp(new_env, *env, ft_strlen(new_env)))
-		env++;
-	return (*env + ft_strlen(new_env) +1);
+	int i;
+
+	i = 0;
+	while (ft_strncmp(new_env, g_mini.enviroment[i], ft_strlen(new_env)))
+		i++;
+	return (g_mini.enviroment[i] + ft_strlen(new_env) +1);
 }
 
-static void	go_home(char **env)
+static void	go_home(void)
 {
 	char	*home;
 
-	update_env("OLDPWD", get_envlst("PWD", env), env);
-	home = get_envlst("HOME", env);
+	update_env("OLDPWD", get_envlst("PWD"));
+	home = get_envlst("HOME");
 	if (!home)
 		ft_putstr_fd(": cd: HOME not set\n", 2);
 	else if (chdir(home) == 0)
-		update_env("PWD", home, env);		
+		update_env("PWD", home);		
 }
 
-int	ft_cd(t_token *current, char **env)
+int	ft_cd(t_token *current)
 {
 	char	*cwd;
 	
+	if (!search_in_matrix("OLDPWD", g_mini.enviroment))
+		g_mini.enviroment = add_to_matrix("OLDPWD", g_mini.enviroment);
  	if (!current || (current->value[0] == '~' && current->value[1] == '\0') ||
 	 (current->value[0] == '-' && current->value[1] == '-' && current->value[2] == '\0'))
-		return (go_home(env), 0);
+		return (go_home(), 0);
 	else if ((current->value[0] == '-' && current->value[1] == '\0'))
 	{
-		update_env("PWD", get_envlst("OLDPWD", env), env);
-		return (printf("%s\n", get_envlst("PWD", env)), 0);
+		update_env("PWD", get_envlst("OLDPWD"));
+		return (printf("%s\n", get_envlst("PWD")), 0);
 	}
 	if (chdir(current->value) != 0)
 		return (printf("a donde vas majo\n"), 1);
-	update_env("OLDPWD", get_envlst("PWD", env), env);
+	update_env("OLDPWD", get_envlst("PWD"));
 	cwd = getcwd(NULL, 0);
 	if (cwd)
-		update_env("PWD", cwd, env);
+		update_env("PWD", cwd);
 	else
 		return (printf("a donde vas majo\n"), 1);
 	return (0);

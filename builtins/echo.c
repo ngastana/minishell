@@ -20,6 +20,8 @@ int	ft_echo (t_token *token)
 	cur_token = cur_token->next;
 	while (cur_token != NULL)
 	{
+		if (cur_token->type == T_PIPE || cur_token->type == T_AND || cur_token->type == T_NL)
+			break ;
 		if (cur_token->type != T_IDENTIFIER)
 		{
 			cur_token = cur_token->next;

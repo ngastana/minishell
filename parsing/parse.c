@@ -12,10 +12,15 @@
 
 #include "../minishell.h"
 
-void	parse(t_mini mini)
+int	parse(void)
 {
-	parse_consecutive_token(mini);
-	parse_DLESS_token(mini);;
-	parser_dolar(mini);
-	parse_PIPE_token(mini);
+	if (parse_consecutive_token() == 1)
+		return (1);
+	if (parse_DLESS_token() == 1)
+		return (1);
+	if (parser_dolar() == 1)
+		return (1);
+	if (parse_PIPE_token() == 1)
+		return (1);
+	return (0);
 }

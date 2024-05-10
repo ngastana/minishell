@@ -84,10 +84,14 @@ typedef struct s_mini
 	bool	signal_exec;
 	int		infile;
 	int		outfile;
+	int		nbr_pipex;
 	char	**enviroment;
 	char	**export;
 	char	*path;
 	char	**location_paths;
+	char	**comands;
+	int		fd[2];
+	bool	flying;
 }	t_mini;
 
 extern	t_mini	g_mini;
@@ -115,18 +119,18 @@ void	ft_add_token(t_token **token, t_token *new_token);
 void	ft_clear_token(t_token **token);
 
 /*PARSING*/
-void	parse(t_mini mini);
-void	parser_dolar(t_mini mini);
+int		parse(void);
+int		parser_dolar(void);
 size_t 	ft_strlen_same(char *str);
-void	parse_consecutive_token(t_mini mini);
-void	parse_PIPE_token(t_mini mini);
-void	parse_DLESS_token(t_mini mini);
+int		parse_consecutive_token(void);
+int		parse_PIPE_token(void);
+int		parse_DLESS_token(void);
 
 /*EXEC_BUILTIN*/
 int		ft_env(char **env);
 int		ft_pwd(void);
 int		ft_echo (t_token *token);
-int		ft_cd(t_token *current, char **env);
+int		ft_cd(t_token *current);
 /*EXEC_BUINTIN_EXPORT*/
 int		ft_export(t_token *token);
 void	export_sort(char **export);

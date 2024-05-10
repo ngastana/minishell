@@ -35,6 +35,9 @@ static t_mini	initialize_minishell(char **env)
 	ft_memset(&mini, 0, sizeof(t_mini));
 	mini.enviroment = create_matrix(env, 1);
 	mini.export = create_matrix(env, 0);
+	mini.flying = false;
+	mini.outfile = 0;
+	mini.infile = 0;
 	return (mini);
 }
 
@@ -60,13 +63,15 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = readline(BOLD YELLOW "Minishell-3.2$ " RESET);
+		//signal_handlers();
 		if (input)
 		{
 			take(input);
 			g_mini.token = ft_token(input);
 			if (!g_mini.token)
 				continue ;
-			parse(g_mini);
+			if (parse() == 1)
+				continue ;
 /* 			copy = mini;
 			while (copy.token != NULL)
 			{
@@ -74,7 +79,7 @@ int	main(int argc, char **argv, char **env)
 				printf("Tipo del valor de los tokens: %u\n", copy.token->type);
 				copy.token = copy.token->next;
 			} */
-			exec(g_mini, env);
+			exec();
 //			ft_clean(mini);	
 			free(input);
 		}

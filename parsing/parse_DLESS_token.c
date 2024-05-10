@@ -14,16 +14,18 @@
 
 static void DLESS_function(t_token	*cur_token)
 {
-	while (ft_compare(readline(BOLD YELLOW "> " RESET), cur_token->value))
-		printf ("");
+	g_mini.flying = true;
+	while (ft_compare(readline(BOLD YELLOW "> " RESET), cur_token->value) && g_mini.flying == true)
+			write (1, "", 1);
+	g_mini.flying = false;	
 	return;
 }
 
-void parse_DLESS_token(t_mini mini)
+int parse_DLESS_token(void)
 {
 	t_token	*cur_token;
 
-	cur_token = mini.token;
+	cur_token = g_mini.token;
 	while (cur_token)
 	{
 		if (cur_token->type == T_DLESS)
@@ -31,7 +33,7 @@ void parse_DLESS_token(t_mini mini)
 			if (cur_token->next != NULL && cur_token->next->type != T_IDENTIFIER)
 			{
 				printf("Minishell: syntax error near unexpected token `newline'\n");
-				return ;
+				return (1);
 			}
 			else
 			{
@@ -39,11 +41,12 @@ void parse_DLESS_token(t_mini mini)
 				if (cur_token == NULL)
 				{
 					printf ("Minishell: syntax error near unexpected token `newline'\n");
-					return ;	
+					return (1);	
 				}
 				DLESS_function(cur_token);
 			}
 		}
-		cur_token = cur_token->next;		
+		cur_token = cur_token->next;	
 	}
+	return (0);
 }

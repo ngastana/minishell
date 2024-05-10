@@ -12,16 +12,16 @@
 
 #include "../minishell.h"
 
-void	parse_PIPE_token(t_mini mini)
+int	parse_PIPE_token(void)
 {
 	t_token	*cur_token;
 
-	cur_token = mini.token;
+	cur_token = g_mini.token;
 	if (cur_token->type == T_PIPE)
 	{
 		printf("syntax error near unexpected token `|'\n");
 //		ft_clear_token(&cur_token);
-		return ;
+		return (1);
 	}
 	if (cur_token)
 	{
@@ -31,7 +31,8 @@ void	parse_PIPE_token(t_mini mini)
 		{
 			printf("syntax error near unexpected token `|'\n");
 //			ft_clear_token(&cur_token);
-			return ;
+			return (1);
 		}
 	}
+	return (0);
 }

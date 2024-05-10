@@ -20,7 +20,7 @@ int	ft_exec_builtin(t_token *token)
 	if (ft_compare(current->value, "echo") == 0)
 		return (ft_echo(token));
 	if (ft_strncmp(current->value, "cd", 2) == 0)
-		return (ft_cd(current->next, g_mini.enviroment));
+		return (ft_cd(current->next));
 	if (ft_compare(current->value, "env") == 0)
 		return (ft_env(g_mini.enviroment));
 	if (ft_compare(current->value, "pwd") == 0)

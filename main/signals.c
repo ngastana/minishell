@@ -14,28 +14,48 @@
 
 void	handle_sigint(int sig) 
 {
+
+	(void) sig;
 	ft_putstr_fd("\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	(void) sig;
+	// if (g_mini.flying == true)
+	// {
+	// 	g_mini.flying = false;
+	// 	rl_replace_line("", 0);
+	// 	rl_redisplay();
+	// 	return ;
+	// }
 }
 
 void	handle_sigquit(int sig) 
 {
-    printf("Ctrl-\\ pressed. Quitting.\n");
+	printf("quit\n");
 	(void)sig;
-    exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }
 
 void	handle_eof(void) 
 {
-    printf("Ctrl-D pressed. Exiting.\n");
-    exit(EXIT_SUCCESS);
+	if (g_mini.flying == false)
+	{
+		printf("exit\n");
+		exit(EXIT_SUCCESS);
+	}
+	// else
+	// {
+	// 	g_mini.flying = false;
+	// 	rl_replace_line("", 0);
+	// 	rl_redisplay();
+	// 	printf("minishell-3.2: warning: ");
+	// 	printf("here-document at line 1 delimited by end-of-file\n");
+	// 	return ;
+	// }
 }
 
 void	signal_handlers(void)
 {
-    signal(SIGINT, handle_sigint);
-    signal(SIGQUIT, handle_sigquit);
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
 }
