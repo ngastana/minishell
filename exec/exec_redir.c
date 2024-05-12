@@ -17,7 +17,7 @@ int has_redirection(t_mini mini)
 	t_token	*current_token;
 
 	current_token = mini.token;
-	while (current_token)
+	while (current_token && current_token->type != T_PIPE)
 	{
 		if (current_token->type == T_GREAT && current_token->next)
 		{

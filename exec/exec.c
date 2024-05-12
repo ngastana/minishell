@@ -48,27 +48,25 @@ void	first_child(t_mini *cur_mini)
 		dup2(g_mini.outfile, STDOUT_FILENO);
 	else
 		dup2(g_mini.fd[1], STDOUT_FILENO);
-	close(g_mini.fd[0]);
-	close(g_mini.infile);
-	close(g_mini.fd[1]);
 	i = 0;
 	cur_mini->comands = ft_split(get_comands(cur_mini), ' ');
-	while (cur_mini->location_paths[i] != NULL)
+	if (ft_is_builtin(cur_mini->token->value))
+		ft_exec_builtin(cur_mini->token);
+	while (cur_mini->location_paths[i] != NULL && !ft_is_builtin(cur_mini->token->value))
 	{
 		tmp = ft_strjoin(cur_mini->location_paths[i], "/");
 		location = ft_strjoin(tmp, cur_mini->comands[0]);
 		if (access(location, X_OK) == 0)
 		{	
 			if (execve(location, cur_mini->comands, cur_mini->enviroment) == -1)
-				printf("Error execve: %s\n", strerror(errno));
+				printf("Error execve\n");
 			break ;
 		}
 		i++;
 		free (location);
 		free (tmp);
-		//free (str1);
-		//ft_clear(str);
 	}
+	exit (0);
 }
 
 void	second_child(t_mini *cur_mini, int count_pipex)
@@ -77,38 +75,33 @@ void	second_child(t_mini *cur_mini, int count_pipex)
 	char	*location;
 	char	*tmp;
 
-	dup2(g_mini.fd[0], STDIN_FILENO);
-	if (cur_mini->nbr_pipex == count_pipex)
+	if (has_redirection(*cur_mini) && g_mini.infile > 1)
+		dup2(g_mini.infile, STDIN_FILENO);
+	else
+		dup2(g_mini.fd[0], STDIN_FILENO);
+	if ((has_redirection(*cur_mini) && g_mini.outfile != 1) 
+	|| count_pipex == cur_mini->nbr_pipex)
 		dup2(g_mini.outfile, STDOUT_FILENO);
 	else
 		dup2(g_mini.fd[1], STDOUT_FILENO);
-	close(g_mini.fd[0]);
-	close(g_mini.fd[1]);
-	// i = 0;
-	// while (i < count_pipex)
-	// {
-	// 	while (cur_mini->token->type != T_PIPE && cur_mini->token)
-	// 		cur_mini->token = cur_mini->token->next;
-	// 	cur_mini->token = cur_mini->token->next;
-	// 	i++;
-	// }
 	i = 0;
 	cur_mini->comands = ft_split(get_comands(cur_mini), ' ');
-	printf("COMANDS: %s\n", cur_mini->comands[0]);
-	while (cur_mini->location_paths[i] != NULL)
+	if (ft_is_builtin(cur_mini->token->value))
+		ft_exec_builtin(cur_mini->token);
+	while (cur_mini->location_paths[i] != NULL && !ft_is_builtin(cur_mini->token->value)) 
 	{
 		tmp = ft_strjoin(cur_mini->location_paths[i], "/");
 		location = ft_strjoin(tmp, cur_mini->comands[0]);
 		if (access(location, X_OK) == 0)
 		{
 			if (execve(location, cur_mini->comands, cur_mini->enviroment) == -1)
-				printf("Error execve: %s\n", strerror(errno));
+				printf("Error execve\n");
 		}
 		i++;
 		free (location);
 		free (tmp);
 	}
-	close(cur_mini->outfile);
+	exit (0);
 }
 
 
@@ -118,11 +111,6 @@ void	create_child(t_mini *cur_mini)
 	int		count_pipex;
 
 	count_pipex = 0;
-	if (ft_is_builtin(cur_mini->token->value))
-	{
-		ft_exec_builtin(cur_mini->token);
-		return ;
-	}
 	cur_mini->path = find_path(cur_mini->enviroment);
 	cur_mini->location_paths = ft_split(cur_mini->path, ':');
 	pid = fork();
@@ -135,9 +123,13 @@ void	create_child(t_mini *cur_mini)
 	}
 	else if (pid == 0)
 		first_child(cur_mini);
-	printf("entra perroo1 \n");
+	wait (NULL);
 	while (count_pipex < cur_mini->nbr_pipex)
 	{
+		while (cur_mini->token->type != T_PIPE)
+			cur_mini->token = cur_mini->token->next;
+		if (cur_mini->token->type == T_PIPE)
+			cur_mini->token = cur_mini->token->next;		
 		pid = fork();
 		if (pid == -1)
 		{
@@ -146,11 +138,11 @@ void	create_child(t_mini *cur_mini)
 			printf("Fork failed to create a new process.");
 			return ;
 		}
+		count_pipex++;
 		if (pid == 0)
 			second_child(cur_mini, count_pipex);
-		count_pipex++;
 	}
-	
+	wait (NULL);
 }
 
 static int	count_pipex(void)
@@ -169,6 +161,8 @@ static int	count_pipex(void)
 	return (i);
 }
 
+
+
 void	exec(void)
 {
 	static t_mini	cur_mini;
@@ -178,8 +172,6 @@ void	exec(void)
 	if (has_redirection(cur_mini) == 0)
 		return ;
 	create_child(&cur_mini);
-	g_mini.outfile = 0;
-	g_mini.infile = 0;
 	wait (NULL);
 	if (cur_mini.location_paths)
 		free(cur_mini.location_paths);

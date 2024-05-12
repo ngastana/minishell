@@ -36,7 +36,7 @@ static t_mini	initialize_minishell(char **env)
 	mini.enviroment = create_matrix(env, 1);
 	mini.export = create_matrix(env, 0);
 	mini.flying = false;
-	mini.outfile = 0;
+	mini.outfile = 1;
 	mini.infile = 0;
 	return (mini);
 }

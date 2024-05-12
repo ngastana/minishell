@@ -21,9 +21,10 @@ int parse_consecutive_token(void)
 	{
 		if (cur_token->type != T_IDENTIFIER)
 			if (cur_token->next != NULL && cur_token->next->type != T_IDENTIFIER  
-			&& cur_token->next->type != T_LESS && cur_token->next->type != T_DLESS)
+			&& cur_token->next->type != T_LESS && cur_token->next->type != T_DLESS
+			&& cur_token->next->type != T_GREAT)
 			{
-				printf("syntax error near unexpected token `newline'\n");
+				printf("1syntax error near unexpected token `newline'\n");
 				return (1);
 			}
 		cur_token = cur_token->next;
@@ -34,7 +35,7 @@ int parse_consecutive_token(void)
 		if (cur_token->type != T_IDENTIFIER && cur_token->type != T_C_PARENT)
 			if(!cur_token->next)
 			{
-				printf("syntax error near unexpected token `newline'\n");
+				printf("2syntax error near unexpected token `newline'\n");
 				return (1);
 			}
 		cur_token = cur_token->next;
