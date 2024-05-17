@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 16:26:43 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/05 16:56:32 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:23:28 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int has_redirection(t_mini mini)
 	t_token	*current_token;
 
 	current_token = mini.token;
+	g_mini.old_outfile = dup(STDOUT_FILENO);
+	g_mini.old_infile = dup(STDIN_FILENO);
 	while (current_token && current_token->type != T_PIPE)
 	{
 		if (current_token->type == T_GREAT && current_token->next)

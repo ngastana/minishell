@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 12:59:42 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/05 18:26:07 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:31:11 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ void	first_child(t_mini *cur_mini)
 	dup2(g_mini.infile, STDIN_FILENO);
 	if (cur_mini->nbr_pipex == 0)
 		dup2(g_mini.outfile, STDOUT_FILENO);
-	else
+	else if (g_mini.nbr_pipex != 0)
 		dup2(g_mini.fd[1], STDOUT_FILENO);
+	g_mini.outfile = g_mini.old_outfile;
+	g_mini.infile = g_mini.old_infile;
 	i = 0;
 	cur_mini->comands = ft_split(get_comands(cur_mini), ' ');
 	if (ft_is_builtin(cur_mini->token->value))
@@ -79,10 +81,10 @@ void	second_child(t_mini *cur_mini, int count_pipex)
 		dup2(g_mini.infile, STDIN_FILENO);
 	else
 		dup2(g_mini.fd[0], STDIN_FILENO);
-	if ((has_redirection(*cur_mini) && g_mini.outfile != 1) 
-	|| count_pipex == cur_mini->nbr_pipex)
+	printf("OUTFILE %i\n", g_mini.outfile);
+	if (has_redirection(*cur_mini) && g_mini.outfile != 1)
 		dup2(g_mini.outfile, STDOUT_FILENO);
-	else
+	else if (g_mini.nbr_pipex != count_pipex)
 		dup2(g_mini.fd[1], STDOUT_FILENO);
 	i = 0;
 	cur_mini->comands = ft_split(get_comands(cur_mini), ' ');
@@ -101,6 +103,8 @@ void	second_child(t_mini *cur_mini, int count_pipex)
 		free (location);
 		free (tmp);
 	}
+	g_mini.outfile = g_mini.old_outfile;
+	g_mini.infile = g_mini.old_infile;
 	exit (0);
 }
 
@@ -123,7 +127,7 @@ void	create_child(t_mini *cur_mini)
 	}
 	else if (pid == 0)
 		first_child(cur_mini);
-	wait (NULL);
+//	wait (NULL);
 	while (count_pipex < cur_mini->nbr_pipex)
 	{
 		while (cur_mini->token->type != T_PIPE)
@@ -160,8 +164,6 @@ static int	count_pipex(void)
 	}
 	return (i);
 }
-
-
 
 void	exec(void)
 {

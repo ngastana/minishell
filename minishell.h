@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/05 17:54:30 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:24:01 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ typedef struct s_mini
 	bool	signal_exec;
 	int		infile;
 	int		outfile;
+	int		old_infile;
+	int		old_outfile;
 	int		nbr_pipex;
 	char	**enviroment;
 	char	**export;
