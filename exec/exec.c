@@ -6,7 +6,7 @@
 /*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 12:59:42 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/17 16:42:35 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:26:34 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	first_child(t_mini *cur_mini)
 	dup2(g_mini.infile, STDIN_FILENO);
 	if (cur_mini->nbr_pipex == 0)
 		dup2(g_mini.outfile, STDOUT_FILENO);
-	else if (g_mini.nbr_pipex != 0)
+	else
 		dup2(g_mini.fd[1], STDOUT_FILENO);
 	g_mini.outfile = g_mini.old_outfile;
 	g_mini.infile = g_mini.old_infile;
@@ -59,15 +59,19 @@ void	first_child(t_mini *cur_mini)
 		tmp = ft_strjoin(cur_mini->location_paths[i], "/");
 		location = ft_strjoin(tmp, cur_mini->comands[0]);
 		if (access(location, X_OK) == 0)
-		{	
+		{
+//			g_mini.flying = true;
 			if (execve(location, cur_mini->comands, cur_mini->enviroment) == -1)
 				printf("Error execve\n");
+//			g_mini.flying = false;
 			break ;
 		}
 		i++;
 		free (location);
 		free (tmp);
 	}
+	close (g_mini.fd[0]);
+	close (g_mini.fd[1]);
 	exit (0);
 }
 
@@ -83,8 +87,10 @@ void	second_child(t_mini *cur_mini, int count_pipex)
 		dup2(g_mini.fd[0], STDIN_FILENO);
 	if (has_redirection(*cur_mini) && g_mini.outfile != 1)
 		dup2(g_mini.outfile, STDOUT_FILENO);
-	else if (g_mini.nbr_pipex != count_pipex)
+	else if(g_mini.nbr_pipex != count_pipex)
 		dup2(g_mini.fd[1], STDOUT_FILENO);
+	else
+		dup2(g_mini.old_outfile, STDOUT_FILENO);
 	g_mini.outfile = g_mini.old_outfile;
 	g_mini.infile = g_mini.old_infile;
 	i = 0;
@@ -97,13 +103,18 @@ void	second_child(t_mini *cur_mini, int count_pipex)
 		location = ft_strjoin(tmp, cur_mini->comands[0]);
 		if (access(location, X_OK) == 0)
 		{
+//			g_mini.flying = true;
 			if (execve(location, cur_mini->comands, cur_mini->enviroment) == -1)
 				printf("Error execve\n");
+//			g_mini.flying = false;
+			break;
 		}
 		i++;
 		free (location);
 		free (tmp);
 	}
+	close (g_mini.fd[0]);
+	close (g_mini.fd[1]);
 	exit (0);
 }
 
@@ -126,7 +137,7 @@ void	create_child(t_mini *cur_mini)
 	}
 	else if (pid == 0)
 		first_child(cur_mini);
-//	wait (NULL);
+	//wait(NULL);
 	while (count_pipex < cur_mini->nbr_pipex)
 	{
 		while (cur_mini->token->type != T_PIPE)
@@ -143,7 +154,9 @@ void	create_child(t_mini *cur_mini)
 		}
 		count_pipex++;
 		if (pid == 0)
-			second_child(cur_mini, count_pipex);
+		 	second_child(cur_mini, count_pipex);
+		// if (waitpid(pid, NULL, WNOHANG) == 0)
+		// 	kill(pid, SIGKILL);
 	}
 	wait (NULL);
 }

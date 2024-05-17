@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:21:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/05 16:20:50 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/17 17:50:07 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ static t_mini	initialize_minishell(char **env)
 	mini.flying = false;
 	mini.outfile = 1;
 	mini.infile = 0;
+	if (pipe(g_mini.fd) < 0)
+	{
+		printf("Error doing pipe\n");
+	//	ft_clear();
+	}
+	g_mini.old_outfile = dup(STDOUT_FILENO);
+	g_mini.old_infile = dup(STDIN_FILENO);
 	return (mini);
 }
 

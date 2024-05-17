@@ -6,7 +6,7 @@
 /*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/17 16:24:01 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:59:26 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,22 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# ifndef COLORS_H
-#  define COLORS_H
+#ifndef COLORS_H
+#define COLORS_H
 
-#  define BOLD       "\001\033[1m\002"
-#  define UNDERLINE  "\001\033[4m\002"
-#  define BLACK      "\001\033[30m\002"
-#  define RED        "\001\033[31m\002"
-#  define GREEN      "\001\033[32m\002"
-#  define YELLOW     "\001\033[33m\002"
-#  define BLUE       "\001\033[34m\002"
-#  define MAGENTA    "\001\033[35m\002"
-#  define CYAN       "\001\033[36m\002"
-#  define WHITE      "\001\033[37m\002"
-#  define RESET      "\001\033[0m\002"
+#define BOLD       "\001\033[1m\002"
+#define UNDERLINE  "\001\033[4m\002"
+#define BLACK      "\001\033[30m\002"
+#define RED        "\001\033[31m\002"
+#define GREEN      "\001\033[32m\002"
+#define YELLOW     "\001\033[38;5;226m\002"
+#define BLUE       "\001\033[34m\002"
+#define MAGENTA    "\001\033[35m\002"
+#define CYAN       "\001\033[36m\002"
+#define WHITE      "\001\033[37m\002"
+#define RESET      "\001\033[0m\002"
 
-# endif
+#endif
 
 
 
