@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+         #
+#    By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/03 14:58:43 by ngastana          #+#    #+#              #
-#    Updated: 2024/05/05 16:33:05 by ngastana         ###   ########.fr        #
+#    Updated: 2024/05/17 16:48:44 by ngastana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,19 +72,19 @@ $(NAME): $(OBJ) $(LIBNAME)
 
 $(LIBNAME):
 	@echo "$(BLUE)██████████████████████████ Making LIBFT ████████████████████████$(RESET)"
-	@$(MAKE) -C ./libft all
+	@$(MAKE) -C ./libft all > /dev/null
 	@cp ./libft/libft.a $(LIBNAME)
 
 %.o: %.c
 	@$(CC) $(READINCLUDE) -c $(FLAGS) $^ -o $@
 
 clean:
-	@$(MAKE) -C ./libft clean
+	@$(MAKE) -C ./libft clean > /dev/null
 	@rm -rf $(OBJ)
 	@echo "$(CYAN)████████████████████████ cleaning is DONE ██████████████████████$(RESET)"
 
 fclean: clean
-	@$(MAKE) -C ./libft fclean
+	@$(MAKE) -C ./libft fclean > /dev/null
 	@rm -rf $(NAME) $(LIBNAME)
 	@echo "$(CYAN)███████████████████████ fcleaning is DONE  █████████████████████$(RESET)"
 
