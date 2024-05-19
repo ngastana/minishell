@@ -6,7 +6,7 @@
 /*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 12:59:42 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/17 20:26:34 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/19 13:26:29 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	second_child(t_mini *cur_mini, int count_pipex)
 	char	*location;
 	char	*tmp;
 
+	count_pipex++;
 	if (has_redirection(*cur_mini) && g_mini.infile > 1)
 		dup2(g_mini.infile, STDIN_FILENO);
 	else
@@ -143,7 +144,7 @@ void	create_child(t_mini *cur_mini)
 		while (cur_mini->token->type != T_PIPE)
 			cur_mini->token = cur_mini->token->next;
 		if (cur_mini->token->type == T_PIPE)
-			cur_mini->token = cur_mini->token->next;		
+			cur_mini->token = cur_mini->token->next;
 		pid = fork();
 		if (pid == -1)
 		{
@@ -152,7 +153,6 @@ void	create_child(t_mini *cur_mini)
 			printf("Fork failed to create a new process.");
 			return ;
 		}
-		count_pipex++;
 		if (pid == 0)
 		 	second_child(cur_mini, count_pipex);
 		// if (waitpid(pid, NULL, WNOHANG) == 0)

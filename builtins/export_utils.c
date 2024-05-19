@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 19:06:56 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/05 14:37:56 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/19 13:02:50 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char **add_to_matrix(char *str, char **export)
 	while (export[++count])
 		tmp_export[count] = ft_strdup(export[count]);	
 	tmp_export[count] = ft_strdup(str);
+	tmp_export[count + 1] = NULL;
 	ft_clear(export);
 	return (tmp_export);
 }

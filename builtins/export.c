@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:09:42 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/05 16:21:59 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/19 13:26:19 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,7 @@ int ft_export(t_token *token)
 					change_value(current->value, g_mini.enviroment);
 				else if (ft_strchr(current->value, '='))
 					g_mini.enviroment = add_to_matrix(current->value, g_mini.enviroment);
-			}			
-			if (!current->next)
-				return (0);
+			}
 			current = current->next;
 		}
 	return (0);

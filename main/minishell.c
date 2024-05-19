@@ -6,7 +6,7 @@
 /*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:21:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/17 17:50:07 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/19 13:26:16 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,14 @@ int	ft_compare(const char *s1, const char *s2)
 	return ((*s1 || *s2) ? 1 : 0);
 }
 
-static t_mini	initialize_minishell(char **env)
+static void	initialize_minishell(char **env)
 {
-	t_mini	mini;
-
-	ft_memset(&mini, 0, sizeof(t_mini));
-	mini.enviroment = create_matrix(env, 1);
-	mini.export = create_matrix(env, 0);
-	mini.flying = false;
-	mini.outfile = 1;
-	mini.infile = 0;
+	ft_memset(&g_mini, 0, sizeof(t_mini));
+	g_mini.enviroment = create_matrix(env, 1);
+	g_mini.export = create_matrix(env, 0);
+	g_mini.flying = false;
+	g_mini.outfile = 1;
+	g_mini.infile = 0;
 	if (pipe(g_mini.fd) < 0)
 	{
 		printf("Error doing pipe\n");
@@ -45,7 +43,6 @@ static t_mini	initialize_minishell(char **env)
 	}
 	g_mini.old_outfile = dup(STDOUT_FILENO);
 	g_mini.old_infile = dup(STDIN_FILENO);
-	return (mini);
 }
 
 void	take(char *input)
@@ -65,7 +62,7 @@ int	main(int argc, char **argv, char **env)
 	//t_mini	copy;
 
 	((void)argc, (void)argv);
-	g_mini = initialize_minishell(env);
+	initialize_minishell(env);
 	signal_handlers();
 	while (1)
 	{
