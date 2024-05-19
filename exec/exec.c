@@ -6,7 +6,7 @@
 /*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 12:59:42 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/19 13:26:29 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/19 16:05:57 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	second_child(t_mini *cur_mini, int count_pipex)
 	char	*location;
 	char	*tmp;
 
-	count_pipex++;
 	if (has_redirection(*cur_mini) && g_mini.infile > 1)
 		dup2(g_mini.infile, STDIN_FILENO);
 	else
@@ -96,8 +95,9 @@ void	second_child(t_mini *cur_mini, int count_pipex)
 	g_mini.infile = g_mini.old_infile;
 	i = 0;
 	cur_mini->comands = ft_split(get_comands(cur_mini), ' ');
-	if (ft_is_builtin(cur_mini->token->value))
+	if (cur_mini->token && ft_is_builtin(cur_mini->token->value))
 		ft_exec_builtin(cur_mini->token);
+
 	while (cur_mini->location_paths[i] != NULL && !ft_is_builtin(cur_mini->token->value)) 
 	{
 		tmp = ft_strjoin(cur_mini->location_paths[i], "/");
@@ -131,32 +131,31 @@ void	create_child(t_mini *cur_mini)
 	pid = fork();
 	if (pid == -1)
 	{
-		free(cur_mini->path);
-		free(cur_mini->location_paths);
 		printf("Fork failed to create a new process.");
 		return ;
 	}
 	else if (pid == 0)
 		first_child(cur_mini);
-	//wait(NULL);
 	while (count_pipex < cur_mini->nbr_pipex)
 	{
-		while (cur_mini->token->type != T_PIPE)
+		while (cur_mini->token && cur_mini->token->type != T_PIPE)
 			cur_mini->token = cur_mini->token->next;
-		if (cur_mini->token->type == T_PIPE)
+		if (cur_mini->token && cur_mini->token->type == T_PIPE)
 			cur_mini->token = cur_mini->token->next;
+		count_pipex++;
 		pid = fork();
 		if (pid == -1)
 		{
-			free(cur_mini->path);
-			free(cur_mini->location_paths);
-			printf("Fork failed to create a new process.");
+			printf("Fork failed to create a new process.\n");
 			return ;
 		}
 		if (pid == 0)
 		 	second_child(cur_mini, count_pipex);
-		// if (waitpid(pid, NULL, WNOHANG) == 0)
-		// 	kill(pid, SIGKILL);
+		if ( g_mini.nbr_pipex == count_pipex)
+		{
+			if (waitpid(pid, NULL, WNOHANG) == 0)
+				kill(pid, SIGKILL);
+		}
 	}
 	wait (NULL);
 }
