@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_dolar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:04:36 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/05 16:10:08 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:40:20 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t ft_strlen_same(char *str)
 	return (i);
 }
 
-static char	*ft_find_name(char *value)
+static char	*ft_find_name(char **env, char *value)
 {
 	int		i;
 	char	*name;
@@ -31,16 +31,16 @@ static char	*ft_find_name(char *value)
 
 	i = 0;
 	this = NULL;
-	while (g_mini.enviroment[i] != NULL)
+	while (env[i] != NULL)
 	{
-		if (ft_strlen_same(g_mini.enviroment[i]) < ft_strlen(value))
+		if (ft_strlen_same(env[i]) < ft_strlen(value))
 			len = ft_strlen(value);
 		else
-			len = ft_strlen_same(g_mini.enviroment[i]);
-		if (!ft_strncmp(g_mini.enviroment[i], value, len))
+			len = ft_strlen_same(env[i]);
+		if (!ft_strncmp(env[i], value, len))
 		{
-			name = ft_strdup(g_mini.enviroment[i]);
-			this = ft_substr(name, ft_strlen_same(g_mini.enviroment[i]) +1, ft_strlen(g_mini.enviroment[i]));
+			name = ft_strdup(env[i]);
+			this = ft_substr(name, ft_strlen_same(env[i]) +1, ft_strlen(env[i]));
 			free (name);
 			return(this);
 		}
@@ -49,14 +49,14 @@ static char	*ft_find_name(char *value)
 	return(this);
 }
 
-int	parser_dolar(void)
+int	parser_dolar(t_mini *mini)
 {
 	t_token *cur_token;
 	int		i;
 	char	*name;
 	char	*true_value;
 
-	cur_token = g_mini.token;
+	cur_token = mini->token;
 	while (cur_token)
 	{
 		if (cur_token->type == T_IDENTIFIER)
@@ -70,7 +70,7 @@ int	parser_dolar(void)
 					{
 						i++;
 						true_value = ft_substr(cur_token->value, 0 ,i -1);
-						name = ft_find_name(cur_token->value + i);
+						name = ft_find_name(mini->enviroment, cur_token->value + i);
 						if (cur_token->value)
 							free (cur_token->value);
 						if (!name)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:58:57 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/05 16:23:24 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:16:12 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	remove_from(char *str, char **matrix)
 	
 }
 
-int ft_unset(t_token *token)
+int ft_unset(t_mini *mini, t_token *token)
 {
 	t_token *current;
 
@@ -44,11 +44,11 @@ int ft_unset(t_token *token)
 		return (0);
 	else
 	{
-		if (search_in_matrix(current->value, g_mini.export))
+		if (search_in_matrix(current->value, mini->export))
 		{
-			remove_from(current->value, g_mini.export);
-			if(search_in_matrix(current->value, g_mini.enviroment))
-				remove_from(current->value, g_mini.enviroment);
+			remove_from(current->value, mini->export);
+			if(search_in_matrix(current->value, mini->enviroment))
+				remove_from(current->value, mini->enviroment);
 		}
 	}
 	return (0);

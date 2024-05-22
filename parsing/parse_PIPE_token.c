@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_pipe_token.c                                 :+:      :+:    :+:   */
+/*   parse_PIPE_token.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 13:21:16 by ngastana          #+#    #+#             */
-/*   Updated: 2024/04/28 15:40:58 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:39:27 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	parse_PIPE_token(void)
+int	parse_PIPE_token(t_mini *mini)
 {
 	t_token	*cur_token;
 
-	cur_token = g_mini.token;
+	cur_token = mini->token;
 	if (cur_token->type == T_PIPE)
 	{
 		printf("syntax error near unexpected token `|'\n");

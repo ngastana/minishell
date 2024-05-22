@@ -6,13 +6,13 @@
 /*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:21:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/19 13:26:16 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/21 20:54:08 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_mini	g_mini;
+int	g_status;
 
 int	ft_compare(const char *s1, const char *s2)
 {
@@ -28,21 +28,17 @@ int	ft_compare(const char *s1, const char *s2)
 	return ((*s1 || *s2) ? 1 : 0);
 }
 
-static void	initialize_minishell(char **env)
+static void	initialize_minishell(t_mini **mini, char **env)
 {
-	ft_memset(&g_mini, 0, sizeof(t_mini));
-	g_mini.enviroment = create_matrix(env, 1);
-	g_mini.export = create_matrix(env, 0);
-	g_mini.flying = false;
-	g_mini.outfile = 1;
-	g_mini.infile = 0;
-	if (pipe(g_mini.fd) < 0)
+	*mini = (t_mini *)malloc(sizeof(t_mini));
+	if (*mini == NULL)
 	{
-		printf("Error doing pipe\n");
-	//	ft_clear();
+		perror("Failed to allocate memory for t_mini");
+		exit(EXIT_FAILURE);
 	}
-	g_mini.old_outfile = dup(STDOUT_FILENO);
-	g_mini.old_infile = dup(STDIN_FILENO);
+	(*mini)->enviroment = create_matrix(env, 1);
+	(*mini)->export = create_matrix(env, 0);
+	g_status = 0;
 }
 
 void	take(char *input)
@@ -59,10 +55,12 @@ void	take(char *input)
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
+	t_mini	*mini;
 	//t_mini	copy;
 
 	((void)argc, (void)argv);
-	initialize_minishell(env);
+	mini = NULL;
+	initialize_minishell(&mini, env);
 	signal_handlers();
 	while (1)
 	{
@@ -71,10 +69,10 @@ int	main(int argc, char **argv, char **env)
 		if (input)
 		{
 			take(input);
-			g_mini.token = ft_token(input);
-			if (!g_mini.token)
+			mini->token = ft_token(input);
+			if (!mini->token)
 				continue ;
-			if (parse() == 1)
+			if (parse(mini) == 1)
 				continue ;
 /* 			copy = mini;
 			while (copy.token != NULL)
@@ -83,12 +81,15 @@ int	main(int argc, char **argv, char **env)
 				printf("Tipo del valor de los tokens: %u\n", copy.token->type);
 				copy.token = copy.token->next;
 			} */
-			exec();
-//			ft_clean(mini);	
+			exec(mini);
+			//ft_clean(mini);	
 			free(input);
 		}
 		else
+		{
+			printf("HANDLE_EOF\n");
 			handle_eof();
+		}
 	}
 	return (0);
 }

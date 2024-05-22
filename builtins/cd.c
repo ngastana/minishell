@@ -6,84 +6,84 @@
 /*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 17:32:21 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/19 12:48:25 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:34:18 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	update_env(char *old_env, char *new_env)
+static void	update_env(t_mini *mini, char *old_env, char *new_env)
 {
 	char	*new_env_str;
 	int		i;
 
 	i = 0;
-	while (g_mini.enviroment[i] && (ft_strncmp(old_env, g_mini.enviroment[i], ft_strlen(old_env))))
+	while (mini->enviroment[i] && (ft_strncmp(old_env, mini->enviroment[i], ft_strlen(old_env))))
 		i++;
-	if (g_mini.enviroment[i])
+	if (mini->enviroment[i])
 	{
 		new_env_str = malloc(sizeof(char) * (ft_strlen(old_env) + ft_strlen(new_env) + 1));
 		if (!new_env_str)
 			return ;
-		ft_strlcpy(new_env_str, g_mini.enviroment[i], ft_strlen(old_env) +1);
+		ft_strlcpy(new_env_str, mini->enviroment[i], ft_strlen(old_env) +1);
 		new_env_str[ft_strlen(old_env)] = '=';
 		ft_strlcpy(new_env_str + ft_strlen(old_env) +1, new_env, ft_strlen(new_env) +1);		
-		free (g_mini.enviroment[i]);
-		g_mini.enviroment[i] = new_env_str;
+		free (mini->enviroment[i]);
+		mini->enviroment[i] = new_env_str;
 	}
 }
 
-static char *get_envlst(char *new_env)
+static char *get_envlst(t_mini *mini, char *new_env)
 {
 	int i;
 
 	i = 0;
-	while (g_mini.enviroment[i])
+	while (mini->enviroment[i])
 	{
-		if (ft_strncmp(new_env, g_mini.enviroment[i], ft_strlen(new_env)) == 0)
-			return (g_mini.enviroment[i] + ft_strlen(new_env) + 1);
+		if (ft_strncmp(new_env, mini->enviroment[i], ft_strlen(new_env)) == 0)
+			return (mini->enviroment[i] + ft_strlen(new_env) + 1);
 		i++;
 	}
 	return (NULL);
 }
 
-static void	go_home(void)
+static void	go_home(t_mini *mini)
 {
 	char	*home;
 
-	update_env("OLDPWD", get_envlst("PWD"));
-	home = get_envlst("HOME");
+	update_env(mini, "OLDPWD", get_envlst(mini, "PWD"));
+	home = get_envlst(mini, "HOME");
 	if (!home)
 		ft_putstr_fd(": cd: HOME not set\n", 2);
 	else if (chdir(home) == 0)
-		update_env("PWD", home);
+		update_env(mini, "PWD", home);
 }
 
-int	ft_cd(t_token *current)
+int	ft_cd(t_mini *mini, t_token *current)
 {
 	char	*cwd;
 	char	*oldpwd;
-	
-	if (!search_in_matrix("OLDPWD", g_mini.enviroment))
-		g_mini.enviroment = add_to_matrix("OLDPWD", g_mini.enviroment);
- 	if (!search_in_matrix("PWD", g_mini.enviroment))
+
+	if (!search_in_matrix("OLDPWD", mini->enviroment))
+		mini->enviroment = add_to_matrix("OLDPWD", mini->enviroment);
+ 	if (!search_in_matrix("PWD", mini->enviroment))
 	{
 		cwd = getcwd(NULL, 0);
 		if (cwd)
 		{
-			g_mini.enviroment = add_to_matrix(ft_strjoin("PWD=", cwd), g_mini.enviroment);
+			mini->enviroment = add_to_matrix(ft_strjoin("PWD=", cwd), mini->enviroment);
 			free(cwd);
 		}
 	}
 	if (!current || (current->value[0] == '~' && current->value[1] == '\0') ||
 	 (current->value[0] == '-' && current->value[1] == '-' && current->value[2] == '\0'))
-		return (go_home(), 0);
+		return (go_home(mini), 0);
 	else if ((current->value[0] == '-' && current->value[1] == '\0'))
 	{
-        oldpwd = get_envlst("OLDPWD");
+        oldpwd = get_envlst(mini, "OLDPWD");
         if (oldpwd)
         {
-            update_env("PWD", oldpwd);
+            update_env(mini, "PWD", oldpwd);
             printf("%s\n", oldpwd);
             chdir(oldpwd);
         }
@@ -98,11 +98,11 @@ int	ft_cd(t_token *current)
 		perror("cd");
 		return (printf("a donde vas majo\n"), 1);
 	}
-	update_env("OLDPWD", get_envlst("PWD"));
+	update_env(mini, "OLDPWD", get_envlst(mini, "PWD"));
 	cwd = getcwd(NULL, 0);
 	if (cwd)
 	{
-		update_env("PWD", cwd);
+		update_env(mini, "PWD", cwd);
 		free (cwd);
 	}
 	else

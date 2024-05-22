@@ -6,7 +6,7 @@
 /*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:54 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/17 16:59:26 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/21 20:46:42 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,18 +93,16 @@ typedef struct s_mini
 	char	**location_paths;
 	char	**comands;
 	int		fd[2];
-	bool	flying;
 }	t_mini;
 
-extern	t_mini	g_mini;
 
 /*MAIN*/
 int		main(int argc, char **argv, char **env);
 int		ft_compare(const char *s1, const char *s2);
 
 /*EXEC*/
-void	exec(void);
-int		ft_exec_builtin(t_token *token);
+void	exec(t_mini *mini);
+int		ft_exec_builtin(t_mini *mini, t_token *token);
 int		ft_is_builtin(char *arg);
 
 /*TOKENS*/
@@ -121,30 +119,30 @@ void	ft_add_token(t_token **token, t_token *new_token);
 void	ft_clear_token(t_token **token);
 
 /*PARSING*/
-int		parse(void);
-int		parser_dolar(void);
+int		parse(t_mini *mini);
+int		parser_dolar(t_mini *mini);
 size_t 	ft_strlen_same(char *str);
-int		parse_consecutive_token(void);
-int		parse_PIPE_token(void);
-int		parse_DLESS_token(void);
+int		parse_consecutive_token(t_mini *mini);
+int		parse_PIPE_token(t_mini *mini);
+int		parse_DLESS_token(t_mini *mini);
 
 /*EXEC_BUILTIN*/
 int		ft_env(char **env);
 int		ft_pwd(void);
 int		ft_echo (t_token *token);
-int		ft_cd(t_token *current);
+int		ft_cd(t_mini *mini, t_token *current);
 /*EXEC_BUINTIN_EXPORT*/
-int		ft_export(t_token *token);
+int		ft_export(t_mini *mini, t_token *token);
 void	export_sort(char **export);
 int 	search_in_matrix(char *str, char **export);
 int		check_value(char *str);
 char 	**add_to_matrix(char *str, char **export);
 void	change_value(char *str, char **export);
 char	**create_matrix(char **env, int flag);
-int		ft_unset(t_token *token);
+int		ft_unset(t_mini *mini, t_token *token);
 
 /*EXER_REDIR*/
-int	has_redirection(t_mini mini);
+int	has_redirection(t_mini *mini);
 
 /*SIGNALS*/
 void	signal_handlers(void);
@@ -155,5 +153,7 @@ void	handle_eof(void);
 /*CLEANING*/
 void	ft_clean(t_mini mini);
 void	ft_clear(char **matrix);
+
+extern int	g_status;
 
 #endif

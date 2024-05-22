@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_DLESS_token.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 11:41:15 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/05 15:36:06 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:39:02 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 
 static void DLESS_function(t_token	*cur_token)
 {
-	g_mini.flying = true;
-	while (ft_compare(readline(BOLD YELLOW "> " RESET), cur_token->value) && g_mini.flying == true)
+	while (ft_compare(readline(BOLD YELLOW "> " RESET), cur_token->value))
 			write (1, "", 1);
-	g_mini.flying = false;	
 	return;
 }
 
-int parse_DLESS_token(void)
+int parse_DLESS_token(t_mini *mini)
 {
 	t_token	*cur_token;
 
-	cur_token = g_mini.token;
+	cur_token = mini->token;
 	while (cur_token)
 	{
 		if (cur_token->type == T_DLESS)

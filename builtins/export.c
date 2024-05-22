@@ -6,7 +6,7 @@
 /*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:09:42 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/19 13:26:19 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:15:32 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ static void print_export(char **export)
 	}
 }
 
-int ft_export(t_token *token)
+int ft_export(t_mini *mini, t_token *token)
 {
 	t_token	*current;
  
 	current = token;
 	if (!token)
-		return (print_export(g_mini.export), 0);
+		return (print_export(mini->export), 0);
 	else
 		while (current)
 		{
@@ -70,19 +70,19 @@ int ft_export(t_token *token)
 				current = current->next;
 				continue ;
 			}
-			else if (!search_in_matrix(current->value, g_mini.export)) //nosta
+			else if (!search_in_matrix(current->value, mini->export)) //nosta
 			{
-				g_mini.export = add_to_matrix(current->value, g_mini.export);
+			 mini->export = add_to_matrix(current->value, mini->export);
 				if (ft_strchr(current->value, '='))
-					g_mini.enviroment = add_to_matrix(current->value, g_mini.enviroment);
+				 mini->enviroment = add_to_matrix(current->value, mini->enviroment);
 			}
 			else //siesta
 			{
-				change_value(current->value, g_mini.export);
-				if (search_in_matrix(current->value, g_mini.enviroment))
-					change_value(current->value, g_mini.enviroment);
+				change_value(current->value, mini->export);
+				if (search_in_matrix(current->value, mini->enviroment))
+					change_value(current->value, mini->enviroment);
 				else if (ft_strchr(current->value, '='))
-					g_mini.enviroment = add_to_matrix(current->value, g_mini.enviroment);
+				 mini->enviroment = add_to_matrix(current->value, mini->enviroment);
 			}
 			current = current->next;
 		}

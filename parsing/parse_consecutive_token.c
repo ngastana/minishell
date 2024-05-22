@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   parse_consecutive_token.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngastana  < ngastana@student.42urduliz.    +#+  +:+       +#+        */
+/*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:51:03 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/01 16:01:45 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/21 19:16:35 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int parse_consecutive_token(void)
+int parse_consecutive_token(t_mini *mini)
 {
 	t_token	*cur_token;
 
-	cur_token = g_mini.token;
+	cur_token = mini->token;
 	while (cur_token)
 	{
 		if (cur_token->type != T_IDENTIFIER)
@@ -24,18 +24,18 @@ int parse_consecutive_token(void)
 			&& cur_token->next->type != T_LESS && cur_token->next->type != T_DLESS
 			&& cur_token->next->type != T_GREAT)
 			{
-				printf("1syntax error near unexpected token `newline'\n");
+				printf("syntax error near unexpected token `newline'\n");
 				return (1);
 			}
 		cur_token = cur_token->next;
 	}
-	cur_token = g_mini.token;	
+	cur_token = mini->token;	
 	while (cur_token)
 	{
 		if (cur_token->type != T_IDENTIFIER && cur_token->type != T_C_PARENT)
 			if(!cur_token->next)
 			{
-				printf("2syntax error near unexpected token `newline'\n");
+				printf("syntax error near unexpected token `newline'\n");
 				return (1);
 			}
 		cur_token = cur_token->next;

@@ -6,7 +6,7 @@
 /*   By: ngastana <ngastana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:17:13 by ngastana          #+#    #+#             */
-/*   Updated: 2024/05/17 17:02:09 by ngastana         ###   ########.fr       */
+/*   Updated: 2024/05/21 20:34:53 by ngastana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,6 @@ void	handle_sigint(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	if (g_mini.flying == true)
-	{
-		g_mini.flying = false;
-		rl_replace_line("", 0);
-		rl_redisplay();
-		return ;
-	}
 }
 
 void	handle_sigquit(int sig) 
@@ -38,20 +31,8 @@ void	handle_sigquit(int sig)
 
 void	handle_eof(void) 
 {
-	if (g_mini.flying == false)
-	{
-		printf("exit\n");
-		exit(EXIT_SUCCESS);
-	}
-	else
-	{
-		g_mini.flying = false;
-		rl_replace_line("", 0);
-		rl_redisplay();
-		printf("minishell-3.2: warning: ");
-		printf("here-document at line 1 delimited by end-of-file\n");
-		return ;
-	}
+	printf("exit\n");
+	exit(EXIT_SUCCESS);
 }
 
 void	signal_handlers(void)
