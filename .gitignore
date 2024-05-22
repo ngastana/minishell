@@ -4,3 +4,4 @@ parsing/*.o
 token/*.o
 minishell
 .vscode
+.out

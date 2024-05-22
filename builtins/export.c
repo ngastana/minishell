@@ -70,13 +70,13 @@ int ft_export(t_mini *mini, t_token *token)
 				current = current->next;
 				continue ;
 			}
-			else if (!search_in_matrix(current->value, mini->export)) //nosta
+			else if (!search_in_matrix(current->value, mini->export))
 			{
 			 mini->export = add_to_matrix(current->value, mini->export);
 				if (ft_strchr(current->value, '='))
 				 mini->enviroment = add_to_matrix(current->value, mini->enviroment);
 			}
-			else //siesta
+			else
 			{
 				change_value(current->value, mini->export);
 				if (search_in_matrix(current->value, mini->enviroment))

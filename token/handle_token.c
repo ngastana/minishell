@@ -16,7 +16,7 @@ t_token	*ft_add_new_token(char *value, int mark, t_token_type type)
 {
 	t_token	*new_token;
 
-	new_token = (t_token *)ft_calloc(1, sizeof(t_token));
+	new_token = (t_token *)ft_calloc(sizeof(t_token), 1);
 	if (!new_token)
 		return (NULL);
 	new_token->value = value;
@@ -49,10 +49,9 @@ void	ft_add_token(t_token **token, t_token *new_token)
 		return ;
 	}
 	current = *token;
-	while (current && current->next)
+	while (current->next)
 		current = current->next;
 	current->next = new_token;
-	new_token->prev = current;
 }
 
 int	ft_handle_token(char **input, t_token **token)

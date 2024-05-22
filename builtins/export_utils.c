@@ -75,35 +75,3 @@ void	change_value(char *str, char **export)
 		i++;
 	}
 }
-
-/* void add_to_env(char *str, char **env, int flag)
-{
-	int i;
-	int len;
-
-	i = 0;
-	if (flag == 0) //noesta
-	{	
-		while (env[i])
-			i++;
-		env[i] = ft_strdup(str);
-		env[++i] = NULL;
-		i = -1;
-	}
-	else if (flag == 1) //siesta
-	{
-		while (env[i])
-		{
-			len = 0;
-			while (env[i][len] != '\0' && env[i][len] != '=')
-				len++;
-			if (!ft_strncmp(str,env[i],len))
-			{
-				free(env[i]);
-				env[i] = ft_strdup(str);
-				return ;
-			}
-			i++;
-		}
-	}
-} */

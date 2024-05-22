@@ -12,6 +12,16 @@
 
 #include "minishell.h"
 
+/* void	ft_clear_token(t_token *token)
+{
+	while (token)
+	{
+		if (token->value)
+			free(token->value);
+		token = token->next;
+	}
+} */
+
 void	ft_del(void *ptr)
 {
 	free(ptr);
@@ -23,21 +33,22 @@ void	ft_clear(char **matrix)
 	int	m;
 
 	m = 0;
+	if (!matrix)
+		return ;
 	while (matrix[m] != NULL)
 	{
 		free (matrix[m]);
 		m++;
 	}
-	free (matrix);
+	matrix = NULL;
 }
 
-void	ft_clean(t_mini mini)
+void	ft_clean(t_mini *mini)
 {
-	ft_clear(mini.enviroment);
-/* 	ft_lstclear(&mini.token,ft_del);
-	ft_lstclear(&mini.parsed,ft_del); */
-	if (mini.path)
-		free(mini.path);
-	if (mini.location_paths)
-		ft_clear(mini.location_paths);
+	ft_clear(mini->enviroment);
+	ft_clear(mini->export);
+	ft_clear_token(&mini->token);
+	free(mini);
+ 	// ft_lstclear((t_list**)mini->token,ft_del);
+	// ft_lstclear((t_list**)mini->parsed,ft_del);
 }

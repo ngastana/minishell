@@ -22,5 +22,6 @@ int	ft_pwd(void)
 		return (1);
 	ft_putstr_fd(cwd, 1);
 	ft_putstr_fd("\n", 1);
+	free (cwd);
 	return (0);
 }

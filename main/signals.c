@@ -29,9 +29,11 @@ void	handle_sigquit(int sig)
 	exit(EXIT_SUCCESS);
 }
 
-void	handle_eof(void) 
+void	handle_eof(t_mini *mini) 
 {
 	printf("exit\n");
+	ft_clean(mini);
+	rl_clear_history();
 	exit(EXIT_SUCCESS);
 }
 

@@ -73,7 +73,6 @@ typedef struct s_token
 	int					quotation_mark;
 	char				*value;
 	struct s_token		*next;
-	struct s_token		*prev;
 	struct s_mini		*mini;
 }	t_token;
 
@@ -148,10 +147,10 @@ int	has_redirection(t_mini *mini);
 void	signal_handlers(void);
 void	handle_sigint(int sig);
 void	handle_sigquit(int sig);
-void	handle_eof(void);
+void	handle_eof(t_mini *mini);
 
 /*CLEANING*/
-void	ft_clean(t_mini mini);
+void	ft_clean(t_mini *mini);
 void	ft_clear(char **matrix);
 
 extern int	g_status;

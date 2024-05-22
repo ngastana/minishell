@@ -74,5 +74,6 @@ int ft_without_token(char **input, t_token **token)
 		return (free(value), 0);
 	*input += i;
 	ft_add_token(token, new_token);
+	/* free(value); */
 	return (1);
 }

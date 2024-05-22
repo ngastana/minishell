@@ -31,12 +31,6 @@ t_token	*ft_token(char *input)
 			found = ft_handle_token(&input, &token);
 		else
 			found = ft_without_token(&input, &token);
-/* 		while (token != NULL)
-		{
-			printf("-Valores de los tokens: %s\n", token->value);
-			printf("--Tipo del valor de los tokens: %u\n", token->type);
-			token = token->next;
-		} */
 	}
 	return (token);
 }

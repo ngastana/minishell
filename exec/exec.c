@@ -14,9 +14,12 @@
 
 char	*find_path(char **envp)
 {
-	while (ft_strncmp("PATH", *envp, 4))
-		envp++;
-	return (*envp + 5);
+	int	i;
+
+	i = 0;
+	while (envp && ft_strncmp("PATH", envp[i], 4))
+		i++;
+	return (ft_strdup(envp[i] + 5));
 }
 
 char *get_comands(t_token *cur_token)
@@ -44,9 +47,14 @@ void	ft_child(t_mini *cur_mini)
 	int		i;
 	char	*location;
 	char	*tmp;
+	char	*aux;
 
 	i = 0;
-	cur_mini->comands = ft_split(get_comands(cur_mini->token), ' ');
+	aux = get_comands(cur_mini->token);
+	cur_mini->comands = ft_split(aux, ' ');
+	cur_mini->path = find_path(cur_mini->enviroment);
+	cur_mini->location_paths = ft_split(cur_mini->path, ':');
+	free (aux);
 	while (cur_mini->location_paths[i] != NULL) 
 	{
 		tmp = ft_strjoin(cur_mini->location_paths[i], "/");
@@ -66,8 +74,11 @@ void	ft_child(t_mini *cur_mini)
 		free(location);
 		free(tmp);
 	}
+	if (cur_mini->location_paths)
+		ft_clear(cur_mini->location_paths);
+	if (cur_mini->path)
+		free(cur_mini->path);
 	ft_clear(cur_mini->comands);
-	printf("Command not found: %s\n", cur_mini->comands[0]);
 	exit(EXIT_FAILURE);
 }
 
@@ -79,8 +90,6 @@ void	create_child(t_mini *cur_mini)
 	int		count_pipex;
 
 	count_pipex = 0;
-	cur_mini->path = find_path(cur_mini->enviroment);
-	cur_mini->location_paths = ft_split(cur_mini->path, ':');
 	original_stdout = dup(STDOUT_FILENO);
 	original_stdin = dup(STDIN_FILENO);
 	while (count_pipex <= cur_mini->nbr_pipex)
@@ -95,46 +104,43 @@ void	create_child(t_mini *cur_mini)
 				return ;
 			}
 		}
-		pid = fork();
-		if (pid == -1)
-			return ;
-		else if (pid == 0)
+		if (cur_mini->outfile > 1)
 		{
-			if (cur_mini->outfile > 1)
-			{
-				dup2(cur_mini->outfile, STDOUT_FILENO);
-				close(cur_mini->outfile);
-			}
-			else if(cur_mini->nbr_pipex != count_pipex)
-			{
-				dup2(cur_mini->fd[1], STDOUT_FILENO);
-				close(cur_mini->fd[1]);
-			}
-			if (cur_mini->infile > 1)
-			{
-				dup2(cur_mini->infile, STDIN_FILENO);
-				close(cur_mini->infile);
-			}
-			else if (count_pipex != 0)
-			{
-				dup2(cur_mini->fd[0], STDIN_FILENO);
-				close(cur_mini->fd[0]);
-			}
-			if (ft_is_builtin(cur_mini->token->value))
-			{
-				ft_exec_builtin(cur_mini, cur_mini->token);
-				exit(EXIT_SUCCESS);
-			}
-			else
+			dup2(cur_mini->outfile, STDOUT_FILENO);
+			close(cur_mini->outfile);
+		}
+		else if(cur_mini->nbr_pipex != count_pipex)
+		{
+			dup2(cur_mini->fd[1], STDOUT_FILENO);
+			close(cur_mini->fd[1]);
+		}
+		if (cur_mini->infile > 1)
+		{
+			dup2(cur_mini->infile, STDIN_FILENO);
+			close(cur_mini->infile);
+		}
+		else if (count_pipex != 0)
+		{
+			dup2(cur_mini->fd[0], STDIN_FILENO);
+			close(cur_mini->fd[0]);
+		}
+		if (ft_is_builtin(cur_mini->token->value))
+			ft_exec_builtin(cur_mini, cur_mini->token);
+		else
+		{
+			pid = fork();
+			if (pid == -1)
+				return ;
+			else if (pid == 0)
 			{
 				signal(SIGINT, SIG_DFL);
 				signal(SIGQUIT, SIG_DFL);
 				ft_child(cur_mini);
 				exit(EXIT_SUCCESS);
 			}
+			else
+				waitpid(pid, &g_status, 0);
 		}
-		else
-			waitpid(pid, &g_status, 0);
 		while (cur_mini->token && cur_mini->token->type != T_PIPE)
 			cur_mini->token = cur_mini->token->next;
 		if (cur_mini->token && cur_mini->token->type == T_PIPE)
@@ -145,8 +151,6 @@ void	create_child(t_mini *cur_mini)
 	}
 	close(original_stdout);
 	close(original_stdin);
-	if (cur_mini->location_paths)
-		ft_clear(cur_mini->location_paths);
 	return ;
 }
 

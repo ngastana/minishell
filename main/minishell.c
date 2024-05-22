@@ -16,16 +16,20 @@ int	g_status;
 
 int	ft_compare(const char *s1, const char *s2)
 {
+	int	i;
+
+	i = 0;
 	if (!s1 || !s2)
 		return (1);
-	while (*s1 && *s2)
+	while (s1[i] && s2[i])
 	{
-		if (*s1 != *s2)
+		if (s1[i] != s2[i])
 			return (1);
-		s1++;
-		s2++;
+		i++;
 	}
-	return ((*s1 || *s2) ? 1 : 0);
+	if (s1[i] != '\0' || s2[i] != '\0')
+		return (1);
+	return (0);
 }
 
 static void	initialize_minishell(t_mini **mini, char **env)
@@ -41,11 +45,13 @@ static void	initialize_minishell(t_mini **mini, char **env)
 	g_status = 0;
 }
 
-void	take(char *input)
+void	take(char *input, t_mini *mini)
 {
-	if (!input || !ft_compare(input, "exit"))
+	if (!input || !ft_compare(input, "exit") || !ft_strncmp(input, "exit ", 5))
 	{
 		ft_putstr_fd("exit\n", 1);
+		ft_clean(mini);
+		rl_clear_history();
 		exit (1);
 	}
 	if (input)
@@ -56,7 +62,6 @@ int	main(int argc, char **argv, char **env)
 {
 	char	*input;
 	t_mini	*mini;
-	//t_mini	copy;
 
 	((void)argc, (void)argv);
 	mini = NULL;
@@ -65,31 +70,18 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = readline(BOLD YELLOW "Minishell-3.2$ " RESET);
-		//signal_handlers();
 		if (input)
 		{
-			take(input);
+			take(input, mini);
 			mini->token = ft_token(input);
-			if (!mini->token)
+			if (!mini->token || parse(mini) == 1)
 				continue ;
-			if (parse(mini) == 1)
-				continue ;
-/* 			copy = mini;
-			while (copy.token != NULL)
-			{
-				printf("Valores de los tokens: %s\n", copy.token->value);
-				printf("Tipo del valor de los tokens: %u\n", copy.token->type);
-				copy.token = copy.token->next;
-			} */
 			exec(mini);
-			//ft_clean(mini);	
+			ft_clear_token(&mini->token);
 			free(input);
 		}
 		else
-		{
-			printf("HANDLE_EOF\n");
-			handle_eof();
-		}
+			handle_eof(mini);
 	}
 	return (0);
 }
