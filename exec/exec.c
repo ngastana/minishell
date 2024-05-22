@@ -121,7 +121,10 @@ void	create_child(t_mini *cur_mini)
 				close(cur_mini->fd[0]);
 			}
 			if (ft_is_builtin(cur_mini->token->value))
+			{
 				ft_exec_builtin(cur_mini, cur_mini->token);
+				exit(EXIT_SUCCESS);
+			}
 			else
 			{
 				signal(SIGINT, SIG_DFL);
